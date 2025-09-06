@@ -1,8 +1,10 @@
 {
-    "rewrites":[
+    "rewrites": [
         {
             "source": "/(.*)",
             "destination": "/"
         }
-    ]
+    ],
+    "buildCommand": "npm install --include=dev && npm run build",
+    "outputDirectory": "dist"
 }
