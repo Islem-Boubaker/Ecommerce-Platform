@@ -1,13 +1,17 @@
-import { useState } from 'react';
-import Layouts from './Layouts/Layouts';
+
+import MainLayouts from './Layouts/mainLayouts';
 import './App.css'
+import About from './Pages/About';
+import Brands from './Components/Brands';
 
 function App() {
   return (
     
-    <Layouts>
-    <p>App</p>
-    </Layouts>
+    <MainLayouts>
+      
+      <About />
+      <Brands />
+    </MainLayouts>  
     
     
     
