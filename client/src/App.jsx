@@ -1,5 +1,5 @@
 
-import MainLayouts from './Layouts/mainLayouts';
+import MainLayouts from './Layouts/MainLayouts';
 import './App.css'
 import About from './Pages/About';
 import Brands from './Components/Brands';
