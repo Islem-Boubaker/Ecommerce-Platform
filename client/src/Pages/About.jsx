@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import Aboutimg from "../assets/Aboutimg.png"
 
 // CountUp component
 function CountUp({ from, to, duration }) {
@@ -85,7 +85,7 @@ function About() {
             {/* Right Section image */}
             <div className=" right-0">
                 <img
-                    src="/Aboutimg.png"
+                    src={Aboutimg}
                     alt="Fashion Models"
                     className="w-full h-full object-cover z-0 absolute  min-h-[calc(100vh-8rem)] top-20 right-0 bottom-0 left-0 "
                 />
