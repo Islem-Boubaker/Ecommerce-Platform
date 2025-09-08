@@ -1,18 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import process from "process";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "./",
+  base: process.env.VITE_BASE_PATH || "/Ecommerce-Platform/client",
   optimizeDeps: {
-    include: ['motion/react', 'framer-motion'],
-    force: true
+    include: ["motion/react", "framer-motion"],
+    force: true,
   },
   server: {
     hmr: {
-      overlay: false
-    }
-  }
+      overlay: false,
+    },
+  },
 });
