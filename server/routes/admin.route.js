@@ -1,7 +1,8 @@
 import express from "express";
-import Product from "../models/Product.model.js";
 import multer from "multer";
 import fs from "fs";
+import { addProduct } from "../controllers/product.controller.js";
+import { deleteUser } from "../controllers/user.controller.js";
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -16,35 +17,7 @@ const storage = multer.diskStorage({
     cb(null, req.body.name+ "-" + Date.now() + ".png");
   },
 });
-
 const upload = multer({ storage: storage });
-
-
-router.post(
-  "/admin/addproduct",
-  upload.array("images"),
-  async (req, res) => {
-    try {
-      const productData = req.body;
-
-     
-      const images = req.files.map((file) => file.filename);
-
-      const newProduct = new Product({
-        ...productData,
-        images: images,
-      });
-
-      const savedProduct = await newProduct.save();
-
-      res.status(201).json({
-        message: "Product added successfully with multiple images"
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error adding product");
-    }
-  }
-);
-
+router.post("/admin/addproduct", upload.array("images"), addProduct);
+router.delete("/admin/deleteuser/:id", deleteUser);
 export default router;
