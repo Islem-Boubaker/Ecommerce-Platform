@@ -5,6 +5,7 @@ import db from "./config/db.js";
 import userRoute from "./routes/user.route.js";
 import adminRoute from "./routes/admin.route.js"; 
 import authRoute from "./routes/auth.routes.js"; 
+import path from "path";
 dotenv.config();
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 db();
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use("/", [authRoute,userRoute,adminRoute]);
 

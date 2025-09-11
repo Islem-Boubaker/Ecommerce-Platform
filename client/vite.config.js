@@ -6,7 +6,7 @@ import process from "process";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: process.env.VITE_BASE_PATH || "/Ecommerce-Platform/client",
+  base: process.env.VITE_BASE_PATH || "/",
   optimizeDeps: {
     include: ["motion/react", "framer-motion"],
     force: true,

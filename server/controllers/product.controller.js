@@ -1,23 +1,25 @@
 import Product from "../models/Product.model.js";
-
-// add product controller
 export const addProduct = async (req, res) => {
   try {
-    const productData = req.body;
-    const images = req.files.map((file) => file.filename);
+   
+    const filePaths = req.files.map(file => file.path);
 
-    const newProduct = new Product({
-      ...productData,
-      images,
-    });
+   
+    const productData = {
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      images: filePaths, // all uploaded image paths
+    };
 
-    await newProduct.save();
+    // TODO: Save productData to DB
+    Product.create(productData);
 
     res.status(201).json({
-      message: "Product added successfully with multiple images",
+      message: "Product added successfully",
+      product: productData,
     });
-  } catch (error) {
-    console.error("Error adding product:", error);
-    res.status(500).json({ message: "Error adding product", error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
