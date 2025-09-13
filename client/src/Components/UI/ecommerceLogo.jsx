@@ -1,6 +1,6 @@
 function EcommerceLogo() {
     return (
-        <div className="uppercase text-4xl font-bold text-black  w-30">
+        <div className="uppercase text-2xl font-bold text-black  w-25">
             shop.co
         </div>
     );

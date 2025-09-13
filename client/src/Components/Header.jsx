@@ -6,8 +6,8 @@ import EcommerceLogo from "./UI/ecommerceLogo";
 
 function Header() {
     return (
-        
-        <div className="flex justify-between items-center text-xl  h-18 bg-white shadow-lg pl-2 pr-2">
+
+        <div className="flex justify-between items-center   h-18 bg-white shadow-lg pl-2 pr-2 w-auto">
             {/* Left section - Logo */}
             <div className="header-left">
                 <EcommerceLogo />
