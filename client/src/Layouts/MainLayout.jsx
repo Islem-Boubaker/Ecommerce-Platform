@@ -1,12 +1,12 @@
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
-
-function MainLayouts({ children }) {
+import { Outlet } from 'react-router-dom';
+function MainLayouts() {
     return (
         <>
             <Header />
-            <main className="main">
-                {children}
+            <main >
+                <Outlet />
             </main>
             <Footer />
         </>

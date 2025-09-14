@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Aboutimg from "../assets/Aboutimg.png"
-import StatItem from '../Components/UI/statItem';
+import Aboutimg from "../../assets/Aboutimg.png"
+import StatItem from '../UI/statItem';
 
 
 

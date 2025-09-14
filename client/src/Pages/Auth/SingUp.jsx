@@ -1,8 +1,8 @@
-function Singup() {
+function SingUp() {
     return (
         <div>
             <h1>Singup</h1>
         </div>
     )
 }
-export default Singup
+export default SingUp

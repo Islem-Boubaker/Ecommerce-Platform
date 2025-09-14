@@ -1,4 +1,4 @@
-import ProductCart from "../Components/ProductCart";
+import ProductCart from "../ProductCart";
 import { useEffect, useState } from "react";
 
 
