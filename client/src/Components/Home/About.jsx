@@ -51,44 +51,31 @@ function About() {
         </button>
         <div className="pt-8 border-t border-gray-300 md:max-w-2xl md:mx-auto">
           {/* First row with 2 items */}
-          <div className="grid grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-8 text-center">
-            <StatItem className="text-center "
-              from={stats[0].from}
-              to={stats[0].to}
-              duration={stats[0].duration}
-              label={stats[0].label}
-              hasBorder={false}
-            />
-            <StatItem className="text-center"
-              from={stats[1].from}
-              to={stats[1].to}
-              duration={stats[1].duration}
-              label={stats[1].label}
-              hasBorder={true}
-            />
+          <div className="grid grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-8 md:flex sm:justify-between">
+            {stats.map((stat, index) => (
+              <StatItem
+                key={index}
+                from={stat.from}
+                to={stat.to}
+                duration={stat.duration}
+                label={stat.label}
+                hasBorder={index === 1}
+                className="text-center"
+              />
+            ))}
           </div>
-          {/* Second row with centered item */}
-          <div className="flex justify-center">
-            <StatItem className="text-center"
-              from={stats[2].from}
-              to={stats[2].to}
-              duration={stats[2].duration}
-              label={stats[2].label}
-              hasBorder={false}
-            />
           </div>
         </div>
-      </div>
-      {/* Background image */}
-      <div className="  bg-gray-100
+        {/* Background image */}
+        <div className="  bg-gray-100
             ">
-        <img
-          src={Aboutimg}
-          alt="Fashion Models"
-          className="w-[700px] h-[400px]  relative right-10 sm:object-cover md:w-full md:h-full md:absolute  top-0 md:left-2 md:z-0"
-        />
+          <img
+            src={Aboutimg}
+            alt="Fashion Models"
+            className="w-[700px] h-[400px]  relative right-10 sm:object-cover sm:top-0 md:h-full md:absolute  top-2 md:left-2 md:z-0 md:w-auto"
+          />
+        </div>
       </div>
-    </div>
-  );
+      );
 }
-export default About
+      export default About

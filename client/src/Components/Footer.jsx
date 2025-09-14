@@ -10,8 +10,8 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-gray-50 text-gray-600 w-full">
-      <div className="max-w-6xl mx-auto px-6 py-12">
+    <footer className="bg-gray-50 text-gray-600 w-full  ">
+      <div className="max-w-6xl  p-0 md:p-0 py-12 md:grid md:grid-cols-2 md:gap-8">
         {/* Logo + text + socials */}
         <div className="flex flex-col items-center text-center mb-12">
           <EcommerceLogo className="text-black mb-4" />
@@ -60,7 +60,9 @@ function Footer() {
         </div>
 
         {/* Footer bottom */}
-        <div className="border-t border-gray-200 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500">
+        
+      </div>
+      <div className="border-t border-gray-200 mt-12 mb-10 mr-10 pl-10 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500">
           <p>Shop.co © 2000-2023, All Rights Reserved</p>
           <div className="flex gap-2 mt-4 sm:mt-0">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" className="h-6" />
@@ -70,7 +72,6 @@ function Footer() {
             <img src="https://www.svgrepo.com/show/508690/google-pay.svg" alt="Google Pay" className="h-6" />
           </div>
         </div>
-      </div>
     </footer>
   );
 }
