@@ -28,4 +28,18 @@ router.get("/user/getproduct", async (req, res) => {
   }
 });
 
+
+router.get("/user/getproduct/:id", async (req, res) => {
+  try {
+    // Fetch all products
+    const products = await Product.findById(req.params.id);
+
+    // Send as JSON response
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error while getting products" });
+  }
+});
+
 export default router;
