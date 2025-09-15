@@ -6,8 +6,6 @@ import Login from './Pages/Auth/Login';
 import AdminLayout from './Layouts/AdminLayout';
 import Dashboard from './Pages/Admin/Dashboard';
 import NotFound from './Pages/NotFound';
-import './App.css';
-
 function App() {
   return (
     <Router>
