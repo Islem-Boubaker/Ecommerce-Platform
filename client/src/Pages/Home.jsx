@@ -1,16 +1,14 @@
 import About from "../Components/Home/About";
 import Brands from "../Components/Brands";
 import NewArrivals from "../Components/Home/NewArrivals";
-
+import BrowseByStyle from "../Components/Home/BrowseByStyle";
 function Home() {
     return (
         <>
-
             <About />
             <Brands />
             <NewArrivals />
-
-
+            <BrowseByStyle />
         </>
     )
 }

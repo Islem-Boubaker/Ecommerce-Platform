@@ -8,8 +8,8 @@ export const getProducts = async () => {
 
 
 export const getProductById = async (id) => {
-  const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`);
-  return response.data;
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/user/getproduct/${id}`);
+  return response.json();
 };
 
 
