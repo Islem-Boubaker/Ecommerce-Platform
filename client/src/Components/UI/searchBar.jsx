@@ -1,19 +1,36 @@
-import { Search } from "lucide-react";
+import { AiOutlineSearch } from "react-icons/ai";
+import { TextInput } from "flowbite-react";
 
 function SearchBar() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Searching…");
+  };
+
   return (
-    <div className="relative m-5 w-auto">
-     
-   
-        <Search size={20} className="h-5 w-5 text-black text-4xl font-bold" />
-    
-      {/* <input
-        type="text"
-        name="search"
-        placeholder="Search for products..."
-        className="w-auto h-12 pl-14 pr-6 py-3 text-sm text-gray-700 placeholder-gray-400 bg-gray-100 border-0 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-300 focus:bg-white transition-all duration-200"
-      /> */}
-    </div>
+    <form
+      onSubmit={handleSubmit}
+      className="flex items-center w-full md:w-auto"
+    >
+      <div className="relative">
+        <TextInput
+          placeholder="Search..."
+          type="text"
+          className="hidden md:block max-w-100 pl-40 pr-10 rounded-2xl" 
+          color="white"
+          
+          
+        />
+
+        {/* search icon as button */}
+        <button
+          type="submit"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        >
+          <AiOutlineSearch size={20} />
+        </button>
+      </div>
+    </form>
   );
 }
 

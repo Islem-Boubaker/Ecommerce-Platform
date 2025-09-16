@@ -1,12 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function ProductCart({ product }) {
-  const navigate = useNavigate(); 
 
     const imgUrl = `${import.meta.env.VITE_API_URL}/${product.images[0].replace(/\\/g, "/")}`;
   
-    return (
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer " onClick={() => navigate(`/products/${product._id}`)}>
+  return (
+      <Link to={`/products/${product._id}`}>
+      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer " >
         {/* Product Image */}
         <div className="relative">
           <img
@@ -37,6 +37,7 @@ function ProductCart({ product }) {
           </button>
         </div>
       </div>
+      </Link>
     );
   }
   

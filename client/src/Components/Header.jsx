@@ -1,7 +1,7 @@
 import SearchBar from "./UI/searchBar";
 import LoginIcon from "./UI/loginIcon";
-import NavBar from "./NavBar";
 import ShoppingCartIcon from "./UI/shoppingCartIcon";
+import NavBar from "./NavBar";
 import EcommerceLogo from "./UI/ecommerceLogo";
 
 function Header({items}) {
