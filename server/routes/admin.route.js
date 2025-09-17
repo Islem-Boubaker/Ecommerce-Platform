@@ -3,7 +3,7 @@ import multer from "multer";
 import fs from "fs";
 import { addProduct ,deleteproduct ,updateproduct, getallproducts, getproductById, getproductsByCategory } from "../controllers/product.controller.js";
 import { deleteUser, getUserById, getUserbyname, getAllUsers ,createuser} from "../controllers/user.controller.js";
-
+import { getordersbyuser,getallorders } from "../controllers/Orders.controller.js";
 const router = express.Router();
 
 // Multer storage config
@@ -35,6 +35,10 @@ router.post("/admin/addproduct", upload.array("images"), addProduct)
   .get("/admin/getallusers", getAllUsers)
   .post("/admin/createuser", createuser)
   .delete("/admin/deleteuser/:id", deleteUser)
-  .put("/admin/updateuser/:id", updateUser);
+  .put("/admin/updateuser/:id", updateUser)
+  .get("/admin/getordersbyuser/:id", getordersbyuser)
+  .put("/admin/updateorder/:id", updateorder)
+  .delete("/admin/deleteorder/:id", deleteorder)
+  .get("/admin/getallorders", getallorders);
 
 export default router;
