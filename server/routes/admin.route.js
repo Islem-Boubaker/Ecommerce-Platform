@@ -1,8 +1,8 @@
 import express from "express";
 import multer from "multer";
 import fs from "fs";
-import { addProduct } from "../controllers/product.controller.js";
-import { deleteUser } from "../controllers/user.controller.js";
+import { addProduct ,deleteproduct ,updateproduct, getallproducts, getproductById, getproductsByCategory } from "../controllers/product.controller.js";
+import { deleteUser, getUserById, getUserbyname, getAllUsers ,createuser} from "../controllers/user.controller.js";
 
 const router = express.Router();
 
@@ -23,7 +23,18 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Routes
-router.post("/admin/addproduct", upload.array("images"), addProduct);
-router.delete("/admin/deleteuser/:id", deleteUser);
+router.post("/admin/addproduct", upload.array("images"), addProduct)
+  .delete("/admin/deleteuser/:id", deleteUser)
+  .get("/admin/getallproducts", getallproducts)
+  .get("/admin/getproduct/:id", getproductById)
+  .get("/admin/getproductByCategory/:category", getproductsByCategory)
+  .put("/admin/updateproduct/:id", updateproduct)
+  .delete("/admin/deleteproduct/:id", deleteproduct)
+  .get("/admin/getuser/:id", getUserById)
+  .get("/admin/getuser/:name", getUserbyname)
+  .get("/admin/getallusers", getAllUsers)
+  .post("/admin/createuser", createuser)
+  .delete("/admin/deleteuser/:id", deleteUser)
+  .put("/admin/updateuser/:id", updateUser);
 
 export default router;
