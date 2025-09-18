@@ -1,9 +1,28 @@
 import express from "express";
 import multer from "multer";
 import fs from "fs";
-import { addProduct ,deleteproduct ,updateproduct, getallproducts, getproductById, getproductsByCategory } from "../controllers/product.controller.js";
-import { deleteUser, getUserById, getUserbyname, getAllUsers ,createuser} from "../controllers/user.controller.js";
-import { getordersbyuser,getallorders } from "../controllers/Orders.controller.js";
+import {
+  addProduct,
+  deleteproduct,
+  updateproduct,
+  getallproducts,
+  getproductById,
+  getproductsByCategory,
+} from "../controllers/product.controller.js";
+import {
+  deleteUser,
+  getUserById,
+  getUserbyname,
+  getAllUsers,
+  createuser,
+  updateUser,
+} from "../controllers/user.controller.js";
+import {
+  getordersbyuser,
+  getallorders,
+  updateorders,
+  deleteorders,
+} from "../controllers/Orders.controller.js";
 const router = express.Router();
 
 // Multer storage config
@@ -23,7 +42,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Routes
-router.post("/admin/addproduct", upload.array("images"), addProduct)
+router
+  .post("/admin/addproduct", upload.array("images"), addProduct)
   .delete("/admin/deleteuser/:id", deleteUser)
   .get("/admin/getallproducts", getallproducts)
   .get("/admin/getproduct/:id", getproductById)
@@ -34,11 +54,10 @@ router.post("/admin/addproduct", upload.array("images"), addProduct)
   .get("/admin/getuser/:name", getUserbyname)
   .get("/admin/getallusers", getAllUsers)
   .post("/admin/createuser", createuser)
-  .delete("/admin/deleteuser/:id", deleteUser)
   .put("/admin/updateuser/:id", updateUser)
   .get("/admin/getordersbyuser/:id", getordersbyuser)
-  .put("/admin/updateorder/:id", updateorder)
-  .delete("/admin/deleteorder/:id", deleteorder)
+  .put("/admin/updateorder/:id", updateorders)
+  .delete("/admin/deleteorder/:id", deleteorders)
   .get("/admin/getallorders", getallorders);
 
 export default router;

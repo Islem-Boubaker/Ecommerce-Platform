@@ -6,6 +6,6 @@ import ProductDetails from "../Pages/ProductDetails";
 export const PublicRoutes = (
   <Route element={<MainLayout />}>
     <Route path="/" element={<Home />} />
-    <Route path="/products/:id" element={<ProductDetails />} />
-  </Route>
+    <Route path="/products/:id" element={<ProductDetails/>} />
+  </Route> 
 );
