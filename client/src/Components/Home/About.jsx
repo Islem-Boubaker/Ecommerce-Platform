@@ -34,48 +34,56 @@ function About() {
   ];
 
   return (
-    <div className=" flex  flex-col items-center  overflow-hidden sm:flex-row sm:overflow-none sm:relative
-      ">
+    <div className="w-fit flex flex-col  sm:h-230  xl:flex-row md:h-230 md:relative  lg:h-150 md:w-auto">
 
       {/* Text Content */}
-      <div className="flex-1/3 max-w-3xl p-8 text-center mx-auto md:text-left md:mx-0 md:ml-8 md:z-10 md:text-2xl">
-        <h1 className="text-5xl xl:text-7xl font-black text-black leading-tight mb-8">
+      <div className="text-center mx-auto md:absolute md:z-10 md:text-2xl md:w-[600px] xl:w-[800px] pl-10">
+        <h1 className="text-2xl font-black text-black leading-tight mb-8 md:text-5xl">
           FIND CLOTHES <br /> THAT MATCHES <br /> YOUR STYLE
         </h1>
-        <p className="text-xl text-gray-600 max-w-lg leading-relaxed mb-8 mx-auto md:mx-0">
+        <p className="text-xl text-gray-600 max-w-lg leading-relaxed mb-8 mx-auto md:mx-0 md:text-xl">
           Browse through our diverse range of meticulously crafted garments,
           designed to bring out your individuality and cater to your sense of style.
         </p>
         <button className="bg-black text-white px-12 py-4 rounded-full text-lg font-medium hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg mb-12">
           Shop Now
         </button>
-        <div className="pt-8 border-t border-gray-300 md:max-w-2xl md:mx-auto">
-          {/* First row with 2 items */}
-          <div className="grid grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-8 md:flex sm:justify-between">
+        <div className="pt-8 ">
+          <div className="grid grid-cols-2 mb-6 gap-4 lg:grid-cols-3 lg:gap-8  lg:mb-8 ">
             {stats.map((stat, index) => (
-              <StatItem
-                key={index}
-                from={stat.from}
-                to={stat.to}
-                duration={stat.duration}
-                label={stat.label}
-                hasBorder={index === 1}
-                className="text-center"
-              />
+              <div key={index} className={index === 2 ? "col-start-1 col-end-3 flex justify-center md:col-start-auto md:col-end-auto lg:border-l lg:pl-8 lg:border-gray-300" : ""}>
+                <StatItem
+                  from={stat.from}
+                  to={stat.to}
+                  duration={stat.duration}
+                  label={stat.label}
+                  hasBorder={index === 1}
+                />
+              </div>
             ))}
           </div>
-          </div>
-        </div>
-        {/* Background image */}
-        <div className="  bg-gray-100
-            ">
-          <img
-            src={Aboutimg}
-            alt="Fashion Models"
-            className="w-[700px] h-[400px]  relative right-10 sm:object-cover sm:top-0 md:h-full md:absolute  top-2 md:left-2 md:z-0 md:w-auto"
-          />
+
         </div>
       </div>
-      );
+
+
+
+      {/* Background image */}
+        <div className="bg-gray-100 md:w-1000">
+          <img  
+            src={Aboutimg}
+            alt="Fashion Models"
+            className="w-700 h-100 relative right-10 sm:object-cover sm:top-2  md:absolute  lg:left-0 md:z-0 lg:h-150 md: md:w-300 md:h-200 lg:w-full lg:max-h-300 lg:max-w-600 "
+          />
+
+        </div>
+
+
+
+
+
+
+    </div>
+  );
 }
-      export default About
+export default About

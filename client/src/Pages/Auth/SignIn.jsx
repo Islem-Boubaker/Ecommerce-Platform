@@ -1,4 +1,4 @@
-function SingIn() {
+function SignIn() {
     return (
         <form action="">
             <input type="text" placeholder="Username or Email...."/>
@@ -7,4 +7,4 @@ function SingIn() {
         </form>
     )
 }
-export default SingIn
+export default SignIn

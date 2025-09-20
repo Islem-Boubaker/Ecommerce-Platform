@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-function SingUp() {
+function SignUp() {
   const [NewUser, setNewUser] = useState({
     name: "",
     phone: "",
     email: "",
     password: ""
-  });
+  }); 
 
   const [errors, setErrors] = useState({});
 
@@ -113,4 +113,4 @@ function SingUp() {
   );
 }
 
-export default SingUp;
+export default SignUp;

@@ -1,10 +1,13 @@
 import { Route } from "react-router-dom";
-import Login from "../Pages/Auth/SingIn";
-import SignUp from "../Pages/Auth/singup";
+import Login from "../Pages/Auth/SignIn";
+import SignUp from "../Pages/Auth/SignUp";
 
 export const AuthRoutes = (
   <>
-    <Route path="/singin" element={<Login />} />
-    <Route path="/singup" element={<SignUp />} />
+    <Route path="/signin" element={<Login />} />
+    <Route path="/signup" element={<SignUp />} />
   </>
+
+
+  
 );
