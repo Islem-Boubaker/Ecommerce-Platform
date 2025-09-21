@@ -10,8 +10,8 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-gray-50 text-gray-600 w-full  ">
-      <div className="max-w-6xl  p-0 md:p-0 py-12 md:grid md:grid-cols-2 md:gap-8">
+    <footer className="bg-gray-50 text-gray-600 w-full  lg:w-auto ">
+      <div className="max-w-6xl  p-0 md:p-0 py-12 md:grid md:grid-cols-2 md:gap-8 lg:w-auto">
         {/* Logo + text + socials */}
         <div className="flex flex-col items-center text-center mb-12">
           <EcommerceLogo className="text-black mb-4" />
@@ -39,17 +39,17 @@ function Footer() {
         </div>
 
         {/* Links grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-center sm:text-left">
+        <div className="grid grid-cols-2 gap-8 text-center lg:grid-cols-4 lg:gap-10  lg:text-left">
           {Object.entries(lists).map(([sectionName, items], key) => (
-            <div key={key}>
-              <h2 className="uppercase text-black text-sm font-bold tracking-wide mb-4">
+            <div key={key} className="w-fit">
+              <h2 className="uppercase text-black text-sm font-bold tracking-wide mb-4 lg:text-2xl ">
                 {sectionName}
               </h2>
               <ul className="space-y-2 text-sm">
                 {items.map((item, index) => (
                   <li
                     key={index}
-                    className="hover:text-black transition-colors cursor-pointer"
+                    className="hover:text-black transition-colors cursor-pointer lg:text-lg "
                   >
                     {item}
                   </li>

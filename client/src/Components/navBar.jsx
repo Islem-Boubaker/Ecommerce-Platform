@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Menu, ChevronDown } from "lucide-react";
 
 function NavBar({ items }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [shopDropdown, setShopDropdown] = useState(false);
+
+  // Listen for a global event to open the drawer from other components (mobile/tablet only)
+  useEffect(() => {
+    const handler = () => setMenuIsOpen(true);
+    window.addEventListener("open-nav-drawer", handler);
+    return () => window.removeEventListener("open-nav-drawer", handler);
+  }, []);
 
   const shopSelect = (item) => {
     if (item === "Shop") {
@@ -31,24 +38,23 @@ function NavBar({ items }) {
   };
 
   return (
-    <nav className="flex items-center justify-between p-4 ">
-  
+    <nav className="flex items-center justify-between p-4 order-4">
+
 
       {/* Menu button (mobile) */}
       <button
         onClick={() => setMenuIsOpen(!menuIsOpen)}
-        className="md:hidden text-2xl"
+        className="lg:hidden text-2xl"
       >
         {menuIsOpen ? <X /> : <Menu />}
       </button>
 
       {/* Menu items */}
       <ul
-        className={`text-xl text-black  ${
-          menuIsOpen 
-            ? "block bg-white shadow-lg absolute top-16 left-0 right-0 z-40 md:relative md:top-0 md:shadow-none md:bg-transparent" 
-            : "hidden md:flex md:items-center"
-        }`}
+        className={`text-xl text-black  ${menuIsOpen
+          ? "block bg-white shadow-lg absolute top-16 right-0 w-64 z-40 lg:relative lg:top-0 lg:shadow-none lg:bg-transparent"
+          : "hidden lg:flex lg:items-center"
+          }`}
       >
         {items.map((item, index) => (
           <li key={index} className="hover:bg-gray-200 md:hover:bg-transparent">
@@ -60,7 +66,7 @@ function NavBar({ items }) {
       {/* Close mobile menu when clicking outside */}
       {menuIsOpen && (
         <div
-          className="fixed inset-0 z-30 md:hidden"
+          className="fixed inset-0 z-30 lg:hidden"
           onClick={() => setMenuIsOpen(false)}
         ></div>
       )}

@@ -4,29 +4,50 @@ import ShoppingCartIcon from "./UI/shoppingCartIcon";
 import NavBar from "./NavBar";
 import EcommerceLogo from "./UI/ecommerceLogo";
 
-function Header({items}) {
+function Header({ items }) {
     return (
+        <header className="w-full bg-white shadow-lg sticky top-0 z-50">
+            <div className="max-w-screen-xl mx-auto px-4 h-18 flex items-center gap-3">
+                {/* Left - Logo */}
+                <div className="shrink-0">
+                    <EcommerceLogo />
+                </div>
 
-        <div className="flex justify-between items-center   h-18 bg-white shadow-lg pl-2 pr-2 w-auto relative">
-            {/* Left section - Logo */}
-            <div className="header-left">
-                <EcommerceLogo />
-            </div>
+                {/* Center - NavBar (desktop/laptop only) */}
+                <div className="hidden lg:flex flex-1 justify-center">
+                    <NavBar items={items} />
+                </div>
 
-            {/* Center section - Navigation */}
-            <div className="header-center">
-                <NavBar items={items} />
-            </div>
-
-            {/* Right section - Search and Icons */}
-            <div className="header-right flex gap-2">
-                <SearchBar />
-                <div className="flex gap-2  items-center">
-                    <ShoppingCartIcon />
-                    <LoginIcon />
+                {/* Right cluster - Search, Icons, and NavBar button on mobile/tablet */}
+                <div className="flex items-center gap-3 ml-auto">
+                    <SearchBar />
+                    <div className="flex items-center gap-2">
+                        <div
+                            className="cursor-pointer"
+                            onClick={() => {
+                                if (window.matchMedia('(min-width: 1024px)').matches) return; // lg and up do nothing
+                                window.dispatchEvent(new Event('open-nav-drawer'));
+                            }}
+                        >
+                            <ShoppingCartIcon />
+                        </div>
+                        <div
+                            className="cursor-pointer"
+                            onClick={() => {
+                                if (window.matchMedia('(min-width: 1024px)').matches) return; // lg and up do nothing
+                                window.dispatchEvent(new Event('open-nav-drawer'));
+                            }}
+                        >
+                            <LoginIcon />
+                        </div>
+                    </div>
+                    {/* Mobile/Tablet Nav trigger at far right */}
+                    <div className="lg:hidden">
+                        <NavBar items={items} />
+                    </div>
                 </div>
             </div>
-        </div>
+        </header>
     );
 }
 

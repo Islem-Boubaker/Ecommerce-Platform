@@ -34,7 +34,7 @@ function About() {
   ];
 
   return (
-    <div className="w-fit flex flex-col  sm:h-230  xl:flex-row md:h-230 md:relative  lg:h-150 md:w-auto">
+    <div className="w-fit flex flex-col  sm:h-230  xl:flex-row md:h-202 md:relative  lg:h-150 md:w-auto">
 
       {/* Text Content */}
       <div className="text-center mx-auto md:absolute md:z-10 md:text-2xl md:w-[600px] xl:w-[800px] pl-10">
@@ -69,11 +69,11 @@ function About() {
 
 
       {/* Background image */}
-        <div className="bg-gray-100 md:w-1000">
+        <div className="bg-gray-200 w-fit">
           <img  
             src={Aboutimg}
             alt="Fashion Models"
-            className="w-700 h-100 relative right-10 sm:object-cover sm:top-2  md:absolute  lg:left-0 md:z-0 lg:h-150 md: md:w-300 md:h-200 lg:w-full lg:max-h-300 lg:max-w-600 "
+            className="w-700 h-100 relative right-10 sm:top-0  left-1  md:absolute md:h-200 md:w-300 md:left-1 lg:left-0 md:z-0 lg:h-150 lg:w-full lg:max-h-300 lg:max-w-600 "
           />
 
         </div>
