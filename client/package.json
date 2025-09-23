@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@mui/icons-material": "^7.3.2",
+    "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/vite": "^4.1.13",
     "axios": "^1.12.2",
     "flowbite-react": "^0.12.9",
@@ -19,8 +20,10 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
     "react-router": "^7.9.1",
     "react-router-dom": "^7.9.1",
+    "redux-persist": "^6.0.0",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
