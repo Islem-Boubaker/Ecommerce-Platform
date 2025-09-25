@@ -7,19 +7,19 @@ import EcommerceLogo from "./UI/ecommerceLogo";
 function Header({ items }) {
     return (
         <header className="w-full bg-white shadow-lg sticky top-0 z-50">
-            <div className="max-w-screen-xl mx-auto px-4 h-18 flex items-center gap-3">
+            <div className="max-w-screen-xl mx-auto px-4 h-18 flex items-center gap-15 ">
                 {/* Left - Logo */}
-                <div className="shrink-0">
+                <div className="shrink-0 order-1">
                     <EcommerceLogo />
                 </div>
 
-                {/* Center - NavBar (desktop/laptop only) */}
-                <div className="hidden lg:flex flex-1 justify-center">
+            
+                <div className="order-3  lg:flex flex-1 justify-center lg:order-2">
                     <NavBar items={items} />
                 </div>
 
-                {/* Right cluster - Search, Icons, and NavBar button on mobile/tablet */}
-                <div className="flex items-center gap-3 ml-auto">
+                
+                <div className="flex order-2 items-center gap-3 ml-auto lg:order-3 m-0 ">
                     <SearchBar />
                     <div className="flex items-center gap-2">
                         <div
@@ -41,10 +41,7 @@ function Header({ items }) {
                             <LoginIcon />
                         </div>
                     </div>
-                    {/* Mobile/Tablet Nav trigger at far right */}
-                    <div className="lg:hidden">
-                        <NavBar items={items} />
-                    </div>
+                    
                 </div>
             </div>
         </header>

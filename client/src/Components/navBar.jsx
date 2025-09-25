@@ -42,7 +42,7 @@ function NavBar({ items = [] }) {
       
       {shopDropdown && (
         <ul
-          className="absolute right-70 top-5 mt-2 bg-white shadow-lg text-black rounded w-25 z-50"
+          className="absolute right-70 top-5 mt-2 bg-white shadow-lg text-black rounded w-25 z-50 lg:right-0 lg:mt-10"
           role="menu"
         >
           {SHOP_CATEGORIES.map((category) => (
