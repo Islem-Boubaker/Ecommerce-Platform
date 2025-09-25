@@ -1,74 +1,143 @@
 import { useState, useEffect } from "react";
 import { X, Menu, ChevronDown } from "lucide-react";
 
-function NavBar({ items }) {
+const SHOP_CATEGORIES = ["All", "Men", "Women", "Kids"];
+
+function NavBar({ items = [] }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [shopDropdown, setShopDropdown] = useState(false);
 
-  // Listen for a global event to open the drawer from other components (mobile/tablet only)
+  // Listen for global event to open drawer from other components
   useEffect(() => {
-    const handler = () => setMenuIsOpen(true);
-    window.addEventListener("open-nav-drawer", handler);
-    return () => window.removeEventListener("open-nav-drawer", handler);
+    const handleOpenDrawer = () => setMenuIsOpen(true);
+    window.addEventListener("open-nav-drawer", handleOpenDrawer);
+    return () => window.removeEventListener("open-nav-drawer", handleOpenDrawer);
   }, []);
 
-  const shopSelect = (item) => {
-    if (item === "Shop") {
-      return (
-        <div className="relative hover:bg-gray-200 ">
-          <button
-            onClick={() => setShopDropdown(!shopDropdown)}
-            className="flex items-center gap-1 hover:text-gray-900 px-4 py-2"
-          >
-            {item} <ChevronDown size={16} />
-          </button>
-          {shopDropdown && (
-            <ul className={`absolute ${menuIsOpen ? "left-0 top-10" : "left-0 top-10"} mt-2 bg-white shadow-lg text-black rounded w-32 z-50`}>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">All</li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Men</li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Women</li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Kids</li>
-            </ul>
-          )}
-        </div>
-      );
-    } else {
-      return <span className="hover:text-gray-900 cursor-pointer hover:bg-gray-200 px-4 py-2">{item}</span>;
+  // Close dropdown when menu closes
+  useEffect(() => {
+    if (!menuIsOpen) {
+      setShopDropdown(false);
     }
+  }, [menuIsOpen]);
+
+
+
+  const closeMenu = () => setMenuIsOpen(false);
+  const toggleMenu = () => setMenuIsOpen(prev => !prev);
+  const toggleShopDropdown = () => setShopDropdown(prev => !prev);
+
+  const ShopDropdown = ({ isMobile = false }) => (
+    <div className="relative group">
+      <button
+        onClick={toggleShopDropdown}
+        className={`flex items-center gap-1 px-4 py-2 hover:text-gray-900 ${
+          isMobile ? "" : "hover:bg-gray-200"
+        }`}
+        aria-expanded={shopDropdown}
+        aria-haspopup="true"
+      >
+        Shop <ChevronDown size={16} />
+      </button>
+      
+      {shopDropdown && (
+        <ul
+          className="absolute right-70 top-5 mt-2 bg-white shadow-lg text-black rounded w-25 z-50"
+          role="menu"
+        >
+          {SHOP_CATEGORIES.map((category) => (
+            <li
+              key={category}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+              role="menuitem"
+              onClick={closeMenu}
+            >
+              {category}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+
+  const NavItem = ({ item, isMobile = false }) => {
+    if (item === "Shop") {
+      return <ShopDropdown isMobile={isMobile} />;
+    }
+
+    return (
+      <span
+        className={`cursor-pointer px-4 py-2 hover:text-gray-900 ${
+          isMobile ? "hover:bg-gray-200 rounded" : "hover:bg-gray-200 md:hover:bg-transparent"
+        }`}
+        onClick={isMobile ? closeMenu : undefined}
+      >
+        {item}
+      </span>
+    );
   };
 
   return (
     <nav className="flex items-center justify-between p-4 order-4">
-
-
-      {/* Menu button (mobile) */}
+      {/* Mobile menu button */}
       <button
-        onClick={() => setMenuIsOpen(!menuIsOpen)}
+        onClick={toggleMenu}
         className="lg:hidden text-2xl"
+        aria-label={menuIsOpen ? "Close navigation" : "Open navigation"}
+        aria-expanded={menuIsOpen}
+        aria-controls="mobile-drawer"
       >
-        {menuIsOpen ? <X /> : <Menu />}
+        <Menu />
       </button>
 
-      {/* Menu items */}
-      <ul
-        className={`text-xl text-black  ${menuIsOpen
-          ? "block bg-white shadow-lg absolute top-16 right-0 w-64 z-40 lg:relative lg:top-0 lg:shadow-none lg:bg-transparent"
-          : "hidden lg:flex lg:items-center"
-          }`}
-      >
+      {/* Desktop navigation */}
+      <ul className="hidden lg:flex lg:items-center text-xl text-black">
         {items.map((item, index) => (
-          <li key={index} className="hover:bg-gray-200 md:hover:bg-transparent">
-            {shopSelect(item)}
+          <li key={index}>
+            <NavItem item={item} />
           </li>
         ))}
       </ul>
 
-      {/* Close mobile menu when clicking outside */}
+      {/* Mobile drawer */}
+      <aside
+        id="mobile-drawer"
+        className={`lg:hidden fixed top-0 right-0 h-full w-72 bg-white z-50 transform transition-transform duration-300 ease-in-out ${
+          menuIsOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="drawer-title"
+      >
+        <div className="flex items-center justify-between p-4 border-b">
+          <span id="drawer-title" className="text-lg font-semibold">
+            Menu
+          </span>
+          <button
+            onClick={closeMenu}
+            aria-label="Close navigation"
+            className="text-2xl hover:bg-gray-100 p-1 rounded"
+          >
+            <X />
+          </button>
+        </div>
+        
+        <ul className="flex flex-col p-2 text-black text-lg">
+          {items.map((item, index) => (
+            <li key={index}>
+              <NavItem item={item} isMobile={true} />
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      {/* Backdrop overlay */}
       {menuIsOpen && (
         <div
-          className="fixed inset-0 z-30 lg:hidden"
-          onClick={() => setMenuIsOpen(false)}
-        ></div>
+          className="lg:hidden fixed inset-0 z-40 bg-black/40 transition-opacity duration-300"
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
       )}
     </nav>
   );

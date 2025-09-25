@@ -5,7 +5,7 @@ const router = express.Router();
 // Login endpoint
 router
   .post("/auth/login", finduser)
-  .post("/user/register", createuser);
+  .post("/auth/register", createuser);
 
 export default router;
 
