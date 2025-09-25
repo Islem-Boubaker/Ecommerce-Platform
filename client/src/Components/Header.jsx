@@ -3,8 +3,10 @@ import LoginIcon from "./UI/loginIcon";
 import ShoppingCartIcon from "./UI/shoppingCartIcon";
 import NavBar from "./NavBar";
 import EcommerceLogo from "./UI/ecommerceLogo";
+import { useNavigate } from "react-router";
 
 function Header({ items }) {
+    const navigate = useNavigate();
     return (
         <header className="w-full bg-white shadow-lg sticky top-0 z-50">
             <div className="max-w-screen-xl mx-auto px-4 h-18 flex items-center gap-15 ">
@@ -31,15 +33,9 @@ function Header({ items }) {
                         >
                             <ShoppingCartIcon />
                         </div>
-                        <div
-                            className="cursor-pointer"
-                            onClick={() => {
-                                if (window.matchMedia('(min-width: 1024px)').matches) return; // lg and up do nothing
-                                window.dispatchEvent(new Event('open-nav-drawer'));
-                            }}
-                        >
-                            <LoginIcon />
-                        </div>
+                        <button onClick={()=>navigate("/signin")} >
+                        <LoginIcon />
+                        </button>
                     </div>
                     
                 </div>
