@@ -6,12 +6,21 @@ import userRoute from "./routes/user.route.js";
 import adminRoute from "./routes/admin.route.js"; 
 import authRoute from "./routes/auth.routes.js"; 
 import path from "path";
+import cookieParser from "cookie-parser";
+
 dotenv.config();
 const app = express();
 
 
+app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:1573",  
+  methods: ["GET", "POST", "PUT", "DELETE"], 
+  credentials: true   
+  
+}));
+
 
 db();
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));

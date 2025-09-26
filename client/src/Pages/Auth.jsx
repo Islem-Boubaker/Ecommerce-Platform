@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { User, Mail, Lock } from "lucide-react";
-import FormInput from "../../Components/UI/FormInput";
-import AuthHeader from "../../Components/UI/AuthHeader";
-import ErrorDisplay from "../../Components/UI/ErrorsDisplay";
-import SubmitButton from "../../Components/UI/SubmitButton";
-import RememberMeSection from "../../Components/UI/RememberMeSection";
-import Authtoggle from "../../Components/UI/Authtoggle";
+import FormInput from "../Components/UI/FormInput";
+import AuthHeader from "../Components/UI/AuthHeader";
+import ErrorDisplay from "../Components/UI/ErrorsDisplay";
+import SubmitButton from "../Components/UI/SubmitButton";
+import RememberMeSection from "../Components/UI/RememberMeSection";
+import Authtoggle from "../Components/UI/Authtoggle";
 
-export default function SignIn() {
+export default function Auth() {
   const [IsSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({
     name: "",

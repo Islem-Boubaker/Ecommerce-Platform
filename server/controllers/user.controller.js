@@ -1,15 +1,47 @@
 import User from "../models/User.model.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
 export const createuser = async (req, res) => {
   try {
-    const newUser = new User(req.body);
+    const { name, email, password, phone } = req.body;
+
+    
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User with this email already exists",
+      });
+    }
+
+    // Create new user
+    const newUser = new User({
+      name,
+      email,
+      password,
+      phone: phone || "",
+    });
+
     await newUser.save();
-    res.send("User registered successfully");
+
+    res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        phone: newUser.phone,
+        role: newUser.role,
+      },
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error during registration" });
+    console.error("Registration error:", error);
+    res.status(404).json({error:error})
   }
 };
+
 // delete user controller
 export const deleteUser = async (req, res) => {
   try {
@@ -105,33 +137,62 @@ export const updateUser = async (req, res) => {
 
 export const finduser = async (req, res) => {
   try {
-    const usersloged = req.body;
+    const { email, name, password } = req.body;
+
+    // Validate required fields
+    if (!password || (!email && !name)) {
+      return res.status(400).json({
+        message: "Password and either email or name are required",
+      });
+    }
 
     // Find user by email OR name
     const users = await User.find({
-      $or: [{ email: usersloged.email }, { name: usersloged.name }],
+      $or: [{ email: email }, { name: name }],
     });
 
-    if (!users) {
+    if (!users || users.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    let user = users.find((u) =>
-      bcrypt.compareSync(usersloged.password, u.password)
-    );
+    // Find user with matching password
+    let user = users.find((u) => bcrypt.compareSync(password, u.password));
+
     if (!user) {
-      return res.status(400).json({ message: "Wrong password" });
-    } else {
-      if (user.role === "admin") {
-        res.status(200).json(user);
-        console.log("admin loged");
-      } else {
-        res.status(200).json(user);
-        console.log("client loged");
-      }
+      return res.status(400).json({ message: "Invalid credentials" });
     }
+
+    // Generate token
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET || "fallback-secret-key",
+      { expiresIn: "1d" }
+    );
+
+    // Set cookie
+    res.cookie("authToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    console.log(`${user.role} logged in`);
+    return res.status(200).json({
+      message: "Logged in successfully",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+      },
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error during login" });
+    console.error("Login error:", error);
+    res.status(500).json({
+      message: "Server error during login",
+      error: error.message,
+    });
   }
 };

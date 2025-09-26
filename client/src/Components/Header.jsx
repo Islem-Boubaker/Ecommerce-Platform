@@ -33,7 +33,7 @@ function Header({ items }) {
                         >
                             <ShoppingCartIcon />
                         </div>
-                        <button onClick={()=>navigate("/signin")} >
+                        <button onClick={()=>navigate("/auth")} >
                         <LoginIcon />
                         </button>
                     </div>
