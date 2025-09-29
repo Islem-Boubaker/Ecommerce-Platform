@@ -1,7 +1,7 @@
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import { Outlet } from "react-router-dom";
-
+import SubscribeForm from "../Components/subscribeform"
 
 function MainLayouts() {
     return (
@@ -13,6 +13,7 @@ function MainLayouts() {
             <main>
                 <Outlet />
             </main>
+            <SubscribeForm/>
             <Footer />
         </>
     );
