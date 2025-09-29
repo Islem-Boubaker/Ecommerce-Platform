@@ -1,125 +1,141 @@
 import React from "react";
+import { FaTrash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  incrementQuantity,
+  decrementQuantity,
+  removeOrder,
+  
+} from "../redux/order/orderSlice";
+import { deleteProductFromOrder} from "../services/OrdersServices"
 
-const CardForm = () => {
+
+export default function Cart() {
+  const orderId = useSelector((state) => state.orders.orderId); // current order ID
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.orders.orders);
+  // total calculations
+  const subtotal = orders.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  const discount = subtotal * 0.2; // 20% discount example
+  const deliveryFee = 15;
+  const total = subtotal - discount + deliveryFee;
+
+  const increment = (productId) => {
+    dispatch(incrementQuantity(productId));
+  };
+
+  const decrement = (productId) => {
+    dispatch(decrementQuantity(productId));
+  };
+
+  const handleRemoveProduct = (productId) => {
+    if (!orderId) return alert("No order ID found!");
+    deleteProductFromOrder(productId, orderId); // call backend
+    dispatch(removeOrder(productId)); // update Redux locally
+  };
+  
+
   return (
-    <div className="max-w-[450px] mx-auto bg-white rounded-[26px] shadow-[0_187px_75px_rgba(0,0,0,0.01),0_105px_63px_rgba(0,0,0,0.05),0_47px_47px_rgba(0,0,0,0.09),0_12px_26px_rgba(0,0,0,0.1)]">
-      <form className="flex flex-col gap-5 p-5">
-        <div className="flex flex-col gap-4">
-          {/* Cardholder Name */}
-          <div className="flex flex-col gap-1">
-            <label className="text-[10px] font-semibold text-[#8b8e98]">
-              Card holder full name
-            </label>
-            <input
-              placeholder="Enter your full name"
-              type="text"
-              className="h-10 rounded-[9px] bg-[#f2f2f2] px-4 outline-none focus:bg-transparent focus:ring-2 focus:ring-[#242424] transition-all"
-            />
-          </div>
+    <div className="p-6">
+      <h1 className="uppercase text-4xl font-bold mb-6">Your Cart</h1>
 
-          {/* Card Number */}
-          <div className="flex flex-col gap-1">
-            <label className="text-[10px] font-semibold text-[#8b8e98]">
-              Card Number
-            </label>
-            <input
-              placeholder="0000 0000 0000 0000"
-              type="number"
-              className="h-10 rounded-[9px] bg-[#f2f2f2] px-4 outline-none focus:bg-transparent focus:ring-2 focus:ring-[#242424] transition-all"
-            />
-          </div>
+      {orders.length === 0 && (
+        <div className="text-gray-500">Your cart is empty</div>
+      )}
 
-          {/* Expiry + CVV */}
-          <div className="flex flex-col gap-1">
-            <label className="text-[10px] font-semibold text-[#8b8e98]">
-              Expiry Date / CVV
-            </label>
-            <div className="grid grid-cols-[4fr_2fr] gap-4">
-              <input
-                placeholder="01/23"
-                type="text"
-                className="h-10 rounded-[9px] bg-[#f2f2f2] px-4 outline-none focus:bg-transparent focus:ring-2 focus:ring-[#242424] transition-all"
+      <div className="flex flex-col lg:flex-row gap-10">
+        {/* LEFT – Product list */}
+        <div className="flex-2 space-y-6 bg-gray-100 p-6 rounded-xl h-full w-full lg:w-2/3">
+          {orders.map((product) => (
+            <div
+              key={product.productId}
+              className="flex items-start gap-4 border-b border-gray-200 pb-4 last:border-none"
+            >
+              <img 
+                src={`${import.meta.env.VITE_API_URL}/${product.image.replace(/\\/g, "/")}`}
+                alt={product.name}
+                className="w-20 h-20 object-cover"
               />
-              <input
-                placeholder="CVV"
-                type="number"
-                className="h-10 rounded-[9px] bg-[#f2f2f2] px-4 outline-none focus:bg-transparent focus:ring-2 focus:ring-[#242424] transition-all"
-              />
+              <div className="flex-1">
+                <h2 className="font-bold text-lg">{product.name}</h2>
+                <p className="text-sm">
+                  <b>Price:</b> ${product.price}
+                </p>
+                <p className="text-sm">
+                  <b>Total:</b> ${(product.price * product.quantity).toFixed(2)}
+                </p>
+              </div>
+
+              {/* Quantity buttons */}
+              <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1">
+                <button
+                  className="text-xl"
+                  onClick={() => decrement(product.productId)}
+                >
+                  −
+                </button>
+                <span>{product.quantity}</span>
+                <button
+                  className="text-xl"
+                  onClick={() => increment(product.productId)}
+                >
+                  +
+                </button>
+              </div>
+
+              {/* Trash icon */}
+              <button
+                className="text-red-500 text-xl ml-2"
+                onClick={() => handleRemoveProduct(product.productId)}
+              >
+                <FaTrash />
+              </button>
             </div>
-          </div>
-
-          {/* Checkout Button */}
-          <button
-            type="button"
-            className="h-[55px] rounded-[11px] bg-gradient-to-b from-[#363636] via-[#1b1b1b] to-[#000000] text-white font-bold text-[15px] transition-all hover:ring-4 hover:ring-[#0000003a] hover:ring-offset-2"
-          >
-            Checkout
-          </button>
-
-          {/* Separator */}
-          <div className="grid grid-cols-[1fr_2fr_1fr] gap-2 text-[#8b8e98] mx-2">
-            <hr className="w-full h-[1px] bg-[#e8e8e8] border-0 my-auto" />
-            <p className="text-[11px] font-semibold text-center my-auto">
-              or pay using e-wallet
-            </p>
-            <hr className="w-full h-[1px] bg-[#e8e8e8] border-0 my-auto" />
-          </div>
-
-          {/* Payment options */}
-          <div className="grid grid-cols-3 gap-4 p-2">
-            <button
-              type="button"
-              name="paypal"
-              className="h-[55px] rounded-[11px] bg-[#f2f2f2] flex justify-center items-center"
-            >
-              {/* PayPal SVG */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="124px"
-                height="33px"
-                viewBox="0 0 124 33"
-              >
-                {/* Your PayPal paths here */}
-              </svg>
-            </button>
-
-            <button
-              type="button"
-              name="apple-pay"
-              className="h-[55px] rounded-[11px] bg-[#f2f2f2] flex justify-center items-center"
-            >
-              {/* Apple Pay SVG */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 210.2"
-                className="h-5"
-              >
-                {/* Your Apple Pay paths here */}
-              </svg>
-            </button>
-
-            <button
-              type="button"
-              name="google-pay"
-              className="h-[55px] rounded-[11px] bg-[#f2f2f2] flex justify-center items-center"
-            >
-              {/* Google Pay SVG */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={80}
-                height={39}
-                viewBox="0 0 80 39"
-                fill="none"
-                className="h-6"
-              >
-                {/* Your Google Pay paths here */}
-              </svg>
-            </button>
-          </div>
+          ))}
         </div>
-      </form>
+
+        {/* RIGHT – Order summary */}
+        {orders.length > 0 && (
+          <div className="flex-1 lg:w-80 rounded-xl p-6 h-full bg-gray-200">
+            <h3 className="font-bold text-xl mb-4">Order Summary</h3>
+            <div className="flex justify-between text-gray-700">
+              <span>Subtotal</span>
+              <span>${subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-red-500">
+              <span>Discount (-20%)</span>
+              <span>- ${discount.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-gray-700 border-b pb-2 mb-2">
+              <span>Delivery Fee</span>
+              <span>${deliveryFee.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between font-bold text-lg mb-4">
+              <span>Total</span>
+              <span>${total.toFixed(2)}</span>
+            </div>
+            <div className="flex items-center gap-2 mb-4">
+              <input
+                type="text"
+                placeholder="Add promo code"
+                className="flex-1 rounded-full border border-gray-300 px-4 py-2 focus:outline-none"
+              />
+              <button className="bg-black text-white rounded-full px-4 py-2">
+                Apply
+              </button>
+            </div>
+            <button
+             
+              className="w-full bg-black text-white rounded-full py-3 font-medium hover:bg-gray-900"
+            >
+              Go to Checkout →
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
-};
-
-export default CardForm;
+}
