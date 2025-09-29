@@ -49,7 +49,6 @@ export const getallorders = async (req, res) => {
 
 export const deleteorders = async (req, res) => {
   try {
-
     const { id } = req.params;
     const order = await Orders.findByIdAndDelete(id);
 
@@ -102,14 +101,14 @@ export const createOrder = async (req, res) => {
     }
 
     // Create new order
-    const products = Array.isArray(orderData.products) ? orderData.products : [];
+    const products = Array.isArray(orderData.products)
+      ? orderData.products
+      : [];
     const deliveryFee =
       typeof orderData.deliveryFee === "number" ? orderData.deliveryFee : 0;
     const totalPrice =
-      products.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      ) + deliveryFee;
+      products.reduce((total, item) => total + item.price * item.quantity, 0) +
+      deliveryFee;
 
     order = await Orders.create({
       userId: orderData.userId,
@@ -137,23 +136,47 @@ export const deleteProductFromOrder = async (req, res) => {
   try {
     const { orderId, productId } = req.params;
 
-    const order = await Orders.findByIdAndUpdate(
-      orderId,
-      { $pull: { items: { productId: productId } } },
-      { new: true } // return updated order
-    );
+    // Find the order first
+    const order = await Orders.findById(orderId);
 
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    return res
-      .status(200)
-      .json({ message: "Product removed from order successfully", order });
+    if (order.products.length > 1) {
+      // Remove the product from the products array
+      order.products = order.products.filter(
+        (item) => item.productId.toString() !== productId.toString()
+      );
+
+      // Recalculate total price
+      order.totalPrice =
+        order.products.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        ) + (order.deliveryFee || 0);
+
+      order.updatedAt = new Date();
+      await order.save();
+
+      return res.status(200).json({
+        message: "Product removed from order successfully",
+        order,
+      });
+    } else {
+      // If only one product, delete the whole order
+      await Orders.findByIdAndDelete(orderId);
+
+      return res.status(200).json({
+        message: "Order deleted because it contained only one product",
+      });
+    }
   } catch (error) {
     console.error("Error deleting product from order:", error);
-    return res
-      .status(500)
-      .json({ message: "Error deleting product", error: error.message });
+    return res.status(500).json({
+      message: "Error deleting product",
+      error: error.message,
+    });
   }
 };
+

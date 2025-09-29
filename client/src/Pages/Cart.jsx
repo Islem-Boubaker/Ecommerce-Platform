@@ -33,7 +33,7 @@ export default function Cart() {
 
   const handleRemoveProduct = (productId) => {
     if (!orderId) return alert("No order ID found!");
-    deleteProductFromOrder(productId, orderId); // call backend
+    deleteProductFromOrder(orderId,productId); // call backend
     dispatch(removeOrder(productId)); // update Redux locally
   };
   
