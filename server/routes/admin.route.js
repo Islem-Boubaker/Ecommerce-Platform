@@ -23,6 +23,8 @@ import {
   updateorders,
   deleteorders,
 } from "../controllers/Orders.controller.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
 // Multer storage config
@@ -44,20 +46,20 @@ const upload = multer({ storage });
 // Routes
 router
   .post("/admin/addproduct", upload.array("images"), addProduct)
-  .delete("/admin/deleteuser/:id", deleteUser)
+  .delete("/admin/deleteuser/:id",authMiddleware,deleteUser)
   .get("/admin/getallproducts", getallproducts)
   .get("/admin/getproduct/:id", getproductById)
   .get("/admin/getproductByCategory/:category", getproductsByCategory)
-  .put("/admin/updateproduct/:id", updateproduct)
-  .delete("/admin/deleteproduct/:id", deleteproduct)
+  .put("/admin/updateproduct/:id",authMiddleware, updateproduct)
+  .delete("/admin/deleteproduct/:id",authMiddleware, deleteproduct)
   .get("/admin/getuser/:id", getUserById)
   .get("/admin/getuser/:name", getUserbyname)
   .get("/admin/getallusers", getAllUsers)
-  .post("/admin/createuser", createuser)
-  .put("/admin/updateuser/:id", updateUser)
+  .post("/admin/createuser",authMiddleware,createuser)
+  .put("/admin/updateuser/:id",authMiddleware,updateUser)
   .get("/admin/getordersbyuser/:id", getordersbyuser)
   .put("/admin/updateorder/:id", updateorders)
   .delete("/admin/deleteorder/:id", deleteorders)
-  .get("/admin/getallorders", getallorders);
+  .get("/admin/getallorders",authMiddleware, getallorders);
 
 export default router;

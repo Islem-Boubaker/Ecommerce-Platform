@@ -15,10 +15,11 @@ export default function Filters() {
     };
   
   return (
-    <div><aside className="col-span-3 border-r pr-4 space-y-6">
+    
+      <aside className=" border-r pr-4 space-y-6 w-full min-h-screen">
     <div>
       <h2 className="font-semibold mb-2">Filter by</h2>
-      <button className="text-sm text-blue-500">Clear All</button>
+      <button className="text-sm text-blue-500 cursor-pointer">Clear All</button>
     </div>
 
     {/* Price Filter */}
@@ -101,7 +102,6 @@ export default function Filters() {
     </div>
   </aside>
 
-        
-    </div>
+
   )
 }

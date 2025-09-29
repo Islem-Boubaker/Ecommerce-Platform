@@ -5,6 +5,7 @@ import NavBar from "./NavBar";
 import EcommerceLogo from "./UI/ecommerceLogo";
 import { useNavigate } from "react-router";
 
+
 function Header({ items }) {
     const navigate = useNavigate();
     return (
@@ -26,12 +27,10 @@ function Header({ items }) {
                     <div className="flex items-center gap-2">
                         <div
                             className="cursor-pointer"
-                            onClick={() => {
-                                if (window.matchMedia('(min-width: 1024px)').matches) return; // lg and up do nothing
-                                window.dispatchEvent(new Event('open-nav-drawer'));
-                            }}
+                          
                         >
                             <ShoppingCartIcon />
+                            
                         </div>
                         <button onClick={()=>navigate("/auth")} >
                         <LoginIcon />

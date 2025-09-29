@@ -1,18 +1,28 @@
 import React, { useState } from "react";
-import { User, Mail, Lock } from "lucide-react";
+import { User, Mail, Lock, Phone } from "lucide-react";
 import FormInput from "../Components/UI/FormInput";
 import AuthHeader from "../Components/UI/AuthHeader";
 import ErrorDisplay from "../Components/UI/ErrorsDisplay";
 import SubmitButton from "../Components/UI/SubmitButton";
 import RememberMeSection from "../Components/UI/RememberMeSection";
 import Authtoggle from "../Components/UI/Authtoggle";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  SignInStart,
+  SignInSuccess,
+  SignInFailure,
+} from "../redux/user/userSlice"; // adjust path if needed
 
 export default function Auth() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [IsSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    phone: "",
     rememberMe: false,
   });
 
@@ -21,11 +31,22 @@ export default function Auth() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // ✅ Validation
   const validateForm = () => {
     const newErrors = {};
 
     if (IsSignUp && !formData.name) {
       newErrors.name = "Name is required";
+    }
+
+    if (IsSignUp && !formData.phone) {
+      newErrors.phone = "Phone number is required";
+    } else if (
+      IsSignUp &&
+      formData.phone &&
+      !/^[0-9+\-\s()]+$/.test(formData.phone)
+    ) {
+      newErrors.phone = "Please enter a valid phone number";
     }
 
     if (!formData.email) {
@@ -44,6 +65,7 @@ export default function Auth() {
     return Object.keys(newErrors).length === 0;
   };
 
+  // ✅ Input handler
   const handleInputChange = (field) => (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -60,23 +82,60 @@ export default function Auth() {
     }
   };
 
+  // ✅ Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     setLoading(true);
     setError("");
+    dispatch(SignInStart()); // 🔥 tell Redux we're loading
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const apiUrl = import.meta.env.VITE_API_URL;
 
-      // Mock success
-      console.log("Form submitted:", formData);
-      alert(`${IsSignUp ? "Account created" : "Signed in"} successfully!`);
+      const requestData = IsSignUp
+        ? {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            phone: formData.phone,
+          }
+        : {
+            email: formData.email,
+            password: formData.password,
+          };
+
+      const response = await fetch(
+        `${apiUrl}/auth/${IsSignUp ? "register" : "login"}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(requestData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || `HTTP error! status: ${response.status}`
+        );
+      }
+
+      if (data.user) {
+        dispatch(SignInSuccess(data.user)); // 🔥 Save user in Redux
+      }
+
+      console.log(`${IsSignUp ? "Account created" : "Signed in"} successfully!`);
+      navigate(-1);
     } catch (err) {
-      console.error(err);
+      console.error("Auth error:", err);
       setError(err.message || "Something went wrong");
+      dispatch(SignInFailure(err.message)); // 🔥 Save error in Redux
     } finally {
       setLoading(false);
     }
@@ -93,24 +152,34 @@ export default function Auth() {
       <div className="w-full lg:w-1/2 bg-black flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <AuthHeader isSignUp={IsSignUp} />
-
           <ErrorDisplay error={error} />
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name Field - Only for Sign Up */}
+            {/* Name & Phone - SignUp only */}
             {IsSignUp && (
-              <FormInput
-                type="text"
-                placeholder="Full name"
-                value={formData.name}
-                onChange={handleInputChange("name")}
-                error={errors.name}
-                icon={User}
-                autoComplete="name"
-              />
+              <div className="flex flex-col gap-4 md:flex-row">
+                <FormInput
+                  type="text"
+                  placeholder="Full name"
+                  value={formData.name}
+                  onChange={handleInputChange("name")}
+                  error={errors.name}
+                  icon={User}
+                  autoComplete="name"
+                />
+                <FormInput
+                  type="text"
+                  placeholder="Your number"
+                  value={formData.phone}
+                  onChange={handleInputChange("phone")}
+                  error={errors.phone}
+                  icon={Phone}
+                  autoComplete="tel"
+                />
+              </div>
             )}
 
-            {/* Email Field */}
+            {/* Email */}
             <FormInput
               type="email"
               placeholder="Email address"
@@ -121,7 +190,7 @@ export default function Auth() {
               autoComplete="email"
             />
 
-            {/* Password Field */}
+            {/* Password */}
             <FormInput
               type="password"
               placeholder="Password"
@@ -135,7 +204,6 @@ export default function Auth() {
               onTogglePassword={() => setShowPassword(!showPassword)}
             />
 
-            {/* Remember Me & Forgot Password - Only for Sign In */}
             {!IsSignUp && (
               <RememberMeSection
                 rememberMe={formData.rememberMe}

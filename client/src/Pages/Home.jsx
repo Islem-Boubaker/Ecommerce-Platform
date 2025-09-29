@@ -10,7 +10,7 @@ function Home() {
             <Brands />
             <NewArrivals />
             <BrowseByStyle />
-            <SubscribeForm />
+       
         </>
     )
 }

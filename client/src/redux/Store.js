@@ -1,9 +1,11 @@
 import { configureStore,combineReducers } from '@reduxjs/toolkit'
 import userReducer from './user/userSlice';
+import ordersReducer from './order/orderSlice';
 import {persistReducer,persistStore} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 const rootReducer = combineReducers({
   user: userReducer,
+  orders: ordersReducer,
 });
 const persistConfig = {
   key: 'root',

@@ -22,16 +22,15 @@ const products = [
 ];
 
 export default function ProductListingPage() {
- 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white ">
+      <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-2  gap-6 ">
 
-      <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-12 gap-6">
-        {/* Sidebar Filters */}
-        <Filters/>
-        
-        {/* Product Grid */}
-        <main className="col-span-9">
+        <div className="">
+          <Filters />
+        </div>
+
+        <main className=" w-full">
           <h2 className="text-2xl font-bold mb-6">Casual</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {products.map((product) => (

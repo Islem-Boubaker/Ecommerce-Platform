@@ -4,9 +4,8 @@ import jwt from "jsonwebtoken";
 
 export const createuser = async (req, res) => {
   try {
+    console.log("Registration request received:", req.body);
     const { name, email, password, phone } = req.body;
-
-    
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -38,7 +37,7 @@ export const createuser = async (req, res) => {
     });
   } catch (error) {
     console.error("Registration error:", error);
-    res.status(404).json({error:error})
+    res.status(404).json({ error: error });
   }
 };
 
@@ -137,6 +136,7 @@ export const updateUser = async (req, res) => {
 
 export const finduser = async (req, res) => {
   try {
+   
     const { email, name, password } = req.body;
 
     // Validate required fields
@@ -155,7 +155,7 @@ export const finduser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Find user with matching password
+ 
     let user = users.find((u) => bcrypt.compareSync(password, u.password));
 
     if (!user) {

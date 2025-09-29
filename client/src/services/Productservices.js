@@ -1,20 +1,16 @@
 import axios from "axios";
 
 export const getProducts = async () => {
-  const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
+  const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/getproduct`);
   return response.data; // always return the data
 };
 
 export const getProductById = async (id) => {
   try {
-    const response = await fetch(
+    const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/user/getproduct/${id}`
     );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data.product || data; // Handle both response formats
+    return response.data;
   } catch (error) {
     console.error("Error fetching product:", error);
     throw error;
