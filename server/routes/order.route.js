@@ -5,7 +5,8 @@ import {
   updateorders,
   getallorders,
   getordersbyuser,
-  deleteProductFromOrder
+  deleteProductFromOrder,
+  updateProductFromOrder
 } from "../controllers/Orders.controller.js";
 const router = express.Router();
 router
@@ -15,7 +16,11 @@ router
   .delete(
     "/order/:orderId/product/:productId",
     deleteProductFromOrder
-  )
+)
+.put(
+  "/order/:orderId/product/:productId",
+  updateProductFromOrder
+)
   .get("/order/getallorders", getallorders)
   .get("/order/getordersbyuser/:id", getordersbyuser)
 

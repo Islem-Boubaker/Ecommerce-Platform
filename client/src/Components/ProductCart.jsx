@@ -25,6 +25,7 @@ function ProductCart({ product }) {
         name: product.name,
         image: product.images[0],
         price: product.price,
+        quantity: 1,
       }));
 
       // Prepare data for backend

@@ -10,7 +10,7 @@ function ShoppingCartIcon() {
 
   const handleNavigate = () => {
 
-      if(orders)navigate("/cart");
+      if(orders.length > 0)navigate("/cart");
    
   };
 

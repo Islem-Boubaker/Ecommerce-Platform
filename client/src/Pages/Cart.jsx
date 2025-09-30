@@ -7,7 +7,8 @@ import {
   removeOrder,
   
 } from "../redux/order/orderSlice";
-import { deleteProductFromOrder} from "../services/OrdersServices"
+import { deleteProductFromOrder,updateProductQuantity} from "../services/OrdersServices"
+
 
 
 export default function Cart() {
@@ -24,11 +25,15 @@ export default function Cart() {
   const total = subtotal - discount + deliveryFee;
 
   const increment = (productId) => {
+    const newQuantity = orders.find((item) => item.productId === productId).quantity + 1;
     dispatch(incrementQuantity(productId));
+    updateProductQuantity(orderId,productId,newQuantity); // call backend
   };
 
   const decrement = (productId) => {
+    const newQuantity = Math.max(1, orders.find((item) => item.productId === productId).quantity - 1);
     dispatch(decrementQuantity(productId));
+    updateProductQuantity(orderId,productId,newQuantity); // call backend
   };
 
   const handleRemoveProduct = (productId) => {

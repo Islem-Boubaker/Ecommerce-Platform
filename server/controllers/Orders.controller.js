@@ -180,3 +180,51 @@ export const deleteProductFromOrder = async (req, res) => {
   }
 };
 
+
+
+export const updateProductFromOrder = async (req, res) => {
+  try {
+    const { orderId, productId } = req.params;
+    const { value } = req.body;
+
+    // Find the order first
+    const order = await Orders.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Find the product in the order
+    const product = order.products.find(
+      (item) => item.productId.toString() === productId.toString()
+    );
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found in order" });
+    }
+
+    // Update the product quantity
+    product.quantity =  value;
+
+    // Recalculate total price
+    order.totalPrice =
+      order.products.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      ) + (order.deliveryFee || 0);
+
+    order.updatedAt = new Date();
+    await order.save();
+
+    return res.status(200).json({
+      message: "Product quantity updated successfully",
+      order,
+    });
+  } catch (error) {
+    console.error("Error updating product quantity:", error);
+    return res.status(500).json({
+      message: "Error updating product quantity",
+      error: error.message,
+    });
+  }
+};

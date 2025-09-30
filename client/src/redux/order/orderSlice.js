@@ -13,7 +13,7 @@ const ordersSlice = createSlice({
   initialState,
   reducers: {
     addOrder: (state, action) => {
-      // payload = {productId, name, image, price}
+      // payload = {productId, name, image, price, quantity}
       const existingItem = state.orders.find(
         (item) => item.productId === action.payload.productId
       );

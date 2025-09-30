@@ -40,3 +40,12 @@ export async function deleteProductFromOrder(orderId, productId) {
     method: "DELETE",
   });
 }
+export async function updateProductQuantity(orderId, productId, value ) {
+  await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}/product/${productId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ value }),
+  });
+}
