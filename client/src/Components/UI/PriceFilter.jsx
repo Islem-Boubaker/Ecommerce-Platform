@@ -58,7 +58,7 @@ export default function PriceFilter() {
 
       return () => {
         document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('mouseup', handleMouseUp); 
         document.removeEventListener('touchmove', handleTouchMove);
         document.removeEventListener('touchend', handleMouseUp);
       };
@@ -70,12 +70,12 @@ export default function PriceFilter() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white">
-      <div className="border border-gray-200 rounded-2xl p-6">
+    <div className="w-full max-w-md mx-auto bg-white">
+      <div className=" ">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold">Price</h3>
-          <ChevronUp className="w-5 h-5 text-gray-400" />
+         
         </div>
 
         {/* Slider Container */}
