@@ -1,11 +1,102 @@
 import mongoose from "mongoose";
 
-let Product=mongoose.Schema({
-    name:String,
-    description:String,
-    price:Number,
-    images: [String],
-    category:String
-})
+const productSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-export default mongoose.model("Product", Product);
+    description: {
+      type: String,
+      trim: true,
+    },
+
+    price: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    images: {
+      type: [String],
+      default: [],
+    },
+
+    category: {
+      type: String, // e.g. "Women", "Men", "Kids"
+      required: true,
+    },
+
+    style: {
+      type: String, // e.g. "Casual", "Formal", "Party", "Gym"
+    },
+
+    size: {
+      type: [String], // e.g. ["S", "M", "L", "XL"]
+      default: [],
+    },
+
+    color: {
+      type: [String], // e.g. ["Red", "Black", "White"]
+      default: [],
+    },
+
+    stock: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    promotion: {
+      discountType: {
+        type: String, // e.g. "percentage" or "flat"
+        enum: ["percentage", "flat"],
+      },
+      discountValue: {
+        type: Number, // e.g. 10 (means 10%)
+        min: 0,
+      },
+      active: {
+        type: Boolean,
+        default: false,
+      },
+    },
+
+    rating: {
+      average: {
+        type: Number,
+        default: 0,
+        min: 0,
+        max: 5,
+      },
+      count: {
+        type: Number,
+        default: 0,
+      },
+    },
+
+    brand: {
+      type: String,
+      trim: true,
+    },
+
+    material: {
+      type: String, // e.g. "Cotton", "Polyester"
+    },
+
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
+
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { timestamps: true } // adds createdAt & updatedAt automatically
+);
+
+export default mongoose.model("Product", productSchema);
