@@ -190,7 +190,7 @@ function ProductDetails() {
               <span className="text-4xl font-bold text-black">
                 ${product.price || "0.00"}
               </span>
-              {/* {product.originalPrice && product.originalPrice > product.price && (
+              {product.originalPrice && product.originalPrice > product.price && (
                                 <>
                                     <span className="text-2xl text-gray-400 line-through">
                                         ${product.originalPrice}
@@ -199,8 +199,8 @@ function ProductDetails() {
                                         -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                                     </span>
                                 </>
-                            )} */}
-            </div>
+                            )}
+            </div> 
 
             {/* Description */}
             <p className="text-gray-600 text-lg leading-relaxed">

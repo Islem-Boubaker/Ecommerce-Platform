@@ -1,8 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ChevronUp } from 'lucide-react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 
-export default function PriceFilter() {
-  const [priceRange, setPriceRange] = useState([50, 200]);
+export default function PriceFilter({ value = [50, 200], onChange }) {
   const [isDragging, setIsDragging] = useState(null);
   const sliderRef = useRef(null);
   const minPrice = 0;
@@ -12,42 +10,40 @@ export default function PriceFilter() {
     setIsDragging(thumb);
   };
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     if (!isDragging || !sliderRef.current) return;
 
     const rect = sliderRef.current.getBoundingClientRect();
     const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-    const value = Math.round(minPrice + percent * (maxPrice - minPrice));
+    const newValue = Math.round(minPrice + percent * (maxPrice - minPrice));
 
-    setPriceRange(prev => {
-      if (isDragging === 'min') {
-        return [Math.min(value, prev[1]), prev[1]];
-      } else {
-        return [prev[0], Math.max(value, prev[0])];
-      }
-    });
-  };
+    if (!onChange) return;
+    if (isDragging === 'min') {
+      onChange([Math.min(newValue, value[1]), value[1]]);
+    } else {
+      onChange([value[0], Math.max(newValue, value[0])]);
+    }
+  }, [isDragging, maxPrice, minPrice, onChange, value]);
 
   const handleMouseUp = () => {
     setIsDragging(null);
   };
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = useCallback((e) => {
     if (!isDragging || !sliderRef.current) return;
 
     const touch = e.touches[0];
     const rect = sliderRef.current.getBoundingClientRect();
     const percent = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
-    const value = Math.round(minPrice + percent * (maxPrice - minPrice));
+    const newValue = Math.round(minPrice + percent * (maxPrice - minPrice));
 
-    setPriceRange(prev => {
-      if (isDragging === 'min') {
-        return [Math.min(value, prev[1]), prev[1]];
-      } else {
-        return [prev[0], Math.max(value, prev[0])];
-      }
-    });
-  };
+    if (!onChange) return;
+    if (isDragging === 'min') {
+      onChange([Math.min(newValue, value[1]), value[1]]);
+    } else {
+      onChange([value[0], Math.max(newValue, value[0])]);
+    }
+  }, [isDragging, maxPrice, minPrice, onChange, value]);
 
   useEffect(() => {
     if (isDragging) {
@@ -63,14 +59,14 @@ export default function PriceFilter() {
         document.removeEventListener('touchend', handleMouseUp);
       };
     }
-  }, [isDragging, priceRange]);
+  }, [isDragging, value, handleMouseMove, handleTouchMove]);
 
   const getPosition = (value) => {
     return ((value - minPrice) / (maxPrice - minPrice)) * 100;
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white">
+    <div className="w-full max-w-md mx-auto bg-white border-b-1 border-gray-400 pb-6">
       <div className=" ">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -89,8 +85,8 @@ export default function PriceFilter() {
             <div
               className="absolute h-2 bg-black rounded-full"
               style={{
-                left: `${getPosition(priceRange[0])}%`,
-                right: `${100 - getPosition(priceRange[1])}%`
+                left: `${getPosition(value[0])}%`,
+                right: `${100 - getPosition(value[1])}%`
               }}
             />
 
@@ -98,7 +94,7 @@ export default function PriceFilter() {
             <div
               className="absolute w-6 h-6 bg-black rounded-full cursor-grab active:cursor-grabbing shadow-lg -translate-x-1/2 -translate-y-1/2"
               style={{
-                left: `${getPosition(priceRange[0])}%`,
+                left: `${getPosition(value[0])}%`,
                 top: '50%'
               }}
               onMouseDown={() => handleMouseDown('min')}
@@ -109,7 +105,7 @@ export default function PriceFilter() {
             <div
               className="absolute w-6 h-6 bg-black rounded-full cursor-grab active:cursor-grabbing shadow-lg -translate-x-1/2 -translate-y-1/2"
               style={{
-                left: `${getPosition(priceRange[1])}%`,
+                left: `${getPosition(value[1])}%`,
                 top: '50%'
               }}
               onMouseDown={() => handleMouseDown('max')}
@@ -119,8 +115,8 @@ export default function PriceFilter() {
 
           {/* Price Labels */}
           <div className="flex justify-between mt-4">
-            <span className="text-sm font-medium">${priceRange[0]}</span>
-            <span className="text-sm font-medium">${priceRange[1]}</span>
+            <span className="text-sm font-medium">${value[0]}</span>
+            <span className="text-sm font-medium">${value[1]}</span>
           </div>
         </div>
       </div>

@@ -1,18 +1,10 @@
 import { useState, useEffect } from "react";
-import { X, Menu, ChevronDown } from "lucide-react";
-
-const SHOP_CATEGORIES = ["All", "Men", "Women", "Kids"];
-
-function NavBar({ items = [] }) {
+import { ChevronDown } from "lucide-react";
+import ShopDropdown from "./UI/ShopDropdown";
+import { Menu,X } from "lucide-react";
+export default function NavBar({ items = [], isMobile = false }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [shopDropdown, setShopDropdown] = useState(false);
-
-  // Listen for global event to open drawer from other components
-  useEffect(() => {
-    const handleOpenDrawer = () => setMenuIsOpen(true);
-    window.addEventListener("open-nav-drawer", handleOpenDrawer);
-    return () => window.removeEventListener("open-nav-drawer", handleOpenDrawer);
-  }, []);
 
   // Close dropdown when menu closes
   useEffect(() => {
@@ -21,126 +13,86 @@ function NavBar({ items = [] }) {
     }
   }, [menuIsOpen]);
 
-
+  const scrollToSection = (item) => {
+    const sectionId = item.toLowerCase().replace(/\s+/g, "_");
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const closeMenu = () => setMenuIsOpen(false);
-  const toggleMenu = () => setMenuIsOpen(prev => !prev);
-  const toggleShopDropdown = () => setShopDropdown(prev => !prev);
 
-  const ShopDropdown = ({ isMobile = false }) => (
-    <div className="relative group">
-      <button
-        onClick={toggleShopDropdown}
-        className={`flex items-center gap-1 px-4 py-2 hover:text-gray-900 ${
-          isMobile ? "" : "hover:bg-gray-200"
-        }`}
-        aria-expanded={shopDropdown}
-        aria-haspopup="true"
-      >
-        Shop <ChevronDown size={16} />
-      </button>
-      
-      {shopDropdown && (
-        <ul
-          className="absolute right-70 top-5 mt-2 bg-white shadow-lg text-black rounded w-25 z-50 lg:right-0 lg:mt-10"
-          role="menu"
-        >
-          {SHOP_CATEGORIES.map((category) => (
-            <li
-              key={category}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-              role="menuitem"
-              onClick={closeMenu}
-            >
-              {category}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+  // ✅ Toggle dropdown for "Shop"
+  const toggleShopDropdown = () => {
+    setShopDropdown((prev) => !prev);
+  };
 
-  const NavItem = ({ item, isMobile = false }) => {
+  const handleItemClick = (item) => {
     if (item === "Shop") {
-      return <ShopDropdown isMobile={isMobile} />;
+      toggleShopDropdown();
+      return;
     }
 
-    return (
-      <span
-        className={`cursor-pointer px-4 py-2 hover:text-gray-900 ${
-          isMobile ? "hover:bg-gray-200 rounded" : "hover:bg-gray-200 md:hover:bg-transparent"
-        }`}
-        onClick={isMobile ? closeMenu : undefined}
-      >
-        {item}
-      </span>
-    );
+    if (isMobile) {
+      closeMenu();
+    }
+
+    scrollToSection(item);
   };
 
   return (
-    <nav className="flex items-center justify-between p-4 order-4">
-      {/* Mobile menu button */}
-      <button
-        onClick={toggleMenu}
-        className="lg:hidden text-2xl"
-        aria-label={menuIsOpen ? "Close navigation" : "Open navigation"}
-        aria-expanded={menuIsOpen}
-        aria-controls="mobile-drawer"
-      >
-        <Menu />
+    <div className="flex items-center justify-between">
+      <button className=" flex lg:hidden" onClick={() => setMenuIsOpen(!menuIsOpen)}>
+        {menuIsOpen ? null: <Menu size={24} />}
       </button>
+      <div className={` fixed top-0 right-0 h-full w-64 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out  ${
+        menuIsOpen ? "translate-x-0" : "translate-x-full"}  lg:flex lg:top-10 lg:right-10 lg:w-auto lg:`}>
+        <button className=" flex lg:hidden" onClick={() => setMenuIsOpen(!menuIsOpen)}>
+        {menuIsOpen ? <X size={24} /> : null}
+      </button>
+      {items.map((item) => (
+        <div key={item} className="relative">
+          {item === "Shop" ? (
+            <button
+              onClick={toggleShopDropdown}
+              className={`flex items-center gap-1 px-4 py-2 hover:text-gray-900 ${
+                isMobile ? "hover:bg-gray-200 rounded" : "hover:bg-gray-200 md:hover:bg-transparent"
+              }`}
+              aria-expanded={shopDropdown}
+              aria-haspopup="true"
+            >
+              {item}
+              <ChevronDown
+                size={16}
+                className={`transition-transform duration-200 ${
+                  shopDropdown ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          ) : (
+            <span
+              className={`cursor-pointer px-4 py-2 hover:text-gray-900 ${
+                isMobile ? "hover:bg-gray-200 rounded" : "hover:bg-gray-200 md:hover:bg-transparent"
+              }`}
+              onClick={() => handleItemClick(item)}
+            >
+              {item}
+            </span>
+          )}
 
-      {/* Desktop navigation */}
-      <ul className="hidden lg:flex lg:items-center text-xl text-black">
-        {items.map((item, index) => (
-          <li key={index}>
-            <NavItem item={item} />
-          </li>
-        ))}
-      </ul>
-
-      {/* Mobile drawer */}
-      <aside
-        id="mobile-drawer"
-        className={`lg:hidden fixed top-0 right-0 h-full w-72 bg-white z-50 transform transition-transform duration-300 ease-in-out ${
-          menuIsOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="drawer-title"
-      >
-        <div className="flex items-center justify-between p-4 border-b">
-          <span id="drawer-title" className="text-lg font-semibold">
-            Menu
-          </span>
-          <button
-            onClick={closeMenu}
-            aria-label="Close navigation"
-            className="text-2xl hover:bg-gray-100 p-1 rounded"
-          >
-            <X />
-          </button>
+          {/* Render dropdown if 'Shop' is toggled open */}
+          {item === "Shop" && shopDropdown && (
+            <ShopDropdown
+              isMobile={isMobile}
+              shopDropdown={shopDropdown}
+              setShopDropdown={setShopDropdown}
+            />
+          )}
         </div>
-        
-        <ul className="flex flex-col p-2 text-black text-lg">
-          {items.map((item, index) => (
-            <li key={index}>
-              <NavItem item={item} isMobile={true} />
-            </li>
-          ))}
-        </ul>
-      </aside>
-
-      {/* Backdrop overlay */}
-      {menuIsOpen && (
-        <div
-          className="lg:hidden fixed inset-0 z-40 bg-black/40 transition-opacity duration-300"
-          onClick={closeMenu}
-          aria-hidden="true"
-        />
-      )}
-    </nav>
+      ))}
+    </div>
+    <div/>
+    </div>
   );
 }
-
-export default NavBar;

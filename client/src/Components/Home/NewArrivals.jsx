@@ -34,7 +34,7 @@ function NewArrivals() {
 
     if (loading) {
         return (
-            <div className="min-h-[400px] flex items-center justify-center">
+            <div id="New_Arrivals" className="min-h-[400px] flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
                     <p className="text-gray-600">Loading products...</p>
@@ -45,7 +45,7 @@ function NewArrivals() {
 
     if (error) {
         return (
-            <div className="min-h-[400px] flex items-center justify-center">
+            <div id="newarrivals" className="min-h-[400px] flex items-center justify-center">
                 <div className="text-center">
                     <p className="text-red-600 mb-4">{error}</p>
                     <button 

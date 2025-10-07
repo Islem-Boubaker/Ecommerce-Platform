@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function DressStyleFilter() {
+export default function DressStyleFilter({selectedStyle,setSelectedStyle}) {
     return (
         <div>
             <h3 className="font-semibold mb-2">Dress Style</h3>
@@ -15,7 +15,8 @@ export default function DressStyleFilter() {
 
                         <li
                             key={style}
-                            className="px-3 py-1 text-sm  hover:bg-gray-200 cursor-pointer w-full"
+                            className={`px-3 py-1 text-sm  hover:bg-gray-200 cursor-pointer w-full ${selectedStyle === style ? "bg-gray-200" : ""}`}
+                            onClick={() => setSelectedStyle(style)}
                         >
                             {style}
                         </li>

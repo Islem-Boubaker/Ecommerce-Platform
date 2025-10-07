@@ -2,7 +2,7 @@ import React from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
 function subscribeform() {
   return (
-      <div className='flex flex-col h-fit p-8 items-center m-10 justify-between rounded-2xl  bg-black text-white  lg:flex-row '>
+      <div id="contact" className='flex flex-col h-fit p-8 items-center m-10 justify-between rounded-2xl  bg-black text-white  lg:flex-row '>
           <div className='text-2xl font-bold uppercase text-center'>
               stay updated about <br />our latest offers and promotions
           </div>
