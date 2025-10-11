@@ -1,18 +1,23 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-const UserSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  phone: String,
-  role: {
-    type: String,
-    enum: ["user", "admin"],
-    default: "user",
+const User = new mongoose.Schema(
+  {
+    name: String,
+    email: String,
+    password: String,
+    phone: String,
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
-UserSchema.pre("save", async function (next) {
+User.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   try {
     const salt = await bcrypt.genSalt(10);
@@ -23,4 +28,4 @@ UserSchema.pre("save", async function (next) {
   }
 });
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model("User", User);

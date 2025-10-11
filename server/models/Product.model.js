@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema(
+const product = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -89,14 +89,9 @@ const productSchema = new mongoose.Schema(
     isFeatured: {
       type: Boolean,
       default: false,
-    },
-
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+    }
   },
-  { timestamps: true } // adds createdAt & updatedAt automatically
+  { timestamps: true } 
 );
 
-export default mongoose.model("Product", productSchema);
+export default mongoose.model("Product", product);

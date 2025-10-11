@@ -19,9 +19,12 @@ const Orders = mongoose.Schema(
         location: String,
         paymentStatus: { type: String, enum: ['pending', 'paid', 'refunded']},
         orderStatus: { type: String, enum: ['pending','processing','shipped','delivered','cancelled'] },
-        createdAt: Date,
-        updatedAt: Date
-    }
+      
+  }
+  ,
+  {
+    timestamp:true
+  }
 )
 
 export default mongoose.model("Orders", Orders);
