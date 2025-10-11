@@ -6,9 +6,8 @@ const router = express.Router();
 router
   .get("/user/getproduct", getallproducts)
   .get("/user/getproduct/:id", getproductById)
-  .post("/user/createcomment/:userId/:productId", createComment)
+  .post("/user/createcomment/:productId/:userId", createComment)
   .put("/user/updatecomment/:id/:userId", updateComment)
   .delete("/user/deletecomment/:id/:userId", deleteComment)
   .get("/user/getcomment/:productId", getComments);
-
 export default router;

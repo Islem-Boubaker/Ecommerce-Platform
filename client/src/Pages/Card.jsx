@@ -11,8 +11,8 @@ import { deleteProductFromOrder,updateProductQuantity} from "../services/OrdersS
 
 
 
-export default function Cart() {
-  const orderId = useSelector((state) => state.orders.orderId); // current order ID
+export default function Card() {
+  const orderId = useSelector((state) => state.orders.orderId); 
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.orders.orders);
   // total calculations

@@ -37,7 +37,9 @@ export default function ProductTabs({ product, activeTab, setActiveTab }) {
         )}
 
         {activeTab === "Rating & Reviews" && (
-          <Comment/>
+          <div className="px-10">
+            <Comment productId={product._id} />
+          </div>
         )}
 
         {activeTab === "FAQs" && (
