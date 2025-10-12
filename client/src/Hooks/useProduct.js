@@ -12,7 +12,9 @@ export const useProduct = (id) => {
         setLoading(true);
         setError(null);
         const data = await getProductById(id);
-        setProduct(data);
+      
+
+        setProduct(data.product);
       } catch (err) {
         setError(err.message);
         console.error("Error fetching product:", err);

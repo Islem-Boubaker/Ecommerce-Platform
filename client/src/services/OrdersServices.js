@@ -1,13 +1,13 @@
 // Plain API helper for orders
 export const createOrder = async (orderData) => {
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/order/createorder`,
+    `${import.meta.env.VITE_API_URL}/order/createorder/${orderData.userId}/${orderData.productId}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(orderData),
+      body: orderData,
     }
   );
 

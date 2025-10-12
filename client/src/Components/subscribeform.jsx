@@ -17,7 +17,7 @@ function subscribeform() {
           
     </div>
   
-)
+      )
 }
 
 export default subscribeform

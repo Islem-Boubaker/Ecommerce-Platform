@@ -3,12 +3,12 @@ import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home";
 import ProductDetails from "../Pages/ProductDetails";
 import Category from "../Pages/Category";
-import Card from "../Pages/Card";
+import Cart from "../Pages/Cart";
 export const PublicRoutes = (
   <Route element={<MainLayout />}>
     <Route path="/" element={<Home />} />
     <Route path="/products/:id" element={<ProductDetails />} />
     <Route path="/category" element={<Category />} />
-    <Route path="/Card" element={<Card />} />
+    <Route path="/Cart" element={<Cart />} />
   </Route> 
 );

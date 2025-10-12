@@ -67,10 +67,11 @@ export const deleteorders = async (req, res) => {
 
 export const createOrder = async (req, res) => {
   try {
+    const {userId,productId} = req.params;
     const orderData = req.body;
 
     // Find existing order for this user
-    let order = await Orders.findOne({ userId: orderData.userId });
+    let order = await Orders.findOne({ userId: userId });
 
     if (order) {
       // Append products to existing order
@@ -79,7 +80,6 @@ export const createOrder = async (req, res) => {
           order.products.push({
             productId: item.productId,
             name: item.name,
-            image: item.image,
             quantity: item.quantity,
             price: item.price,
           });

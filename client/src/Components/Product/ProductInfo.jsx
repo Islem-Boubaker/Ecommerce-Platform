@@ -21,8 +21,17 @@ export default function ProductInfo({
       <div>
         <h1 className="text-4xl font-bold uppercase mb-4">{product.name}</h1>
         <div className="flex items-center gap-3">
-          <ProductRating rating={product.rating || 4.5} />
-          <span className="text-lg font-semibold">{product.rating || 4.5}/5</span>
+          {(() => {
+            const raw = product.rating;
+            const base = typeof raw === 'number' ? raw : (raw && typeof raw.average === 'number' ? raw.average : 4.5);
+            const safeRating = Math.max(0, Math.min(5, base));
+            return (
+              <>
+                <ProductRating rating={safeRating} />
+                <span className="text-lg font-semibold">{safeRating}/5</span>
+              </>
+            );
+          })()}
         </div>
       </div>
 
