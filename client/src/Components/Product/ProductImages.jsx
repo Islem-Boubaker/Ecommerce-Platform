@@ -12,8 +12,8 @@ export default function ProductImages({ product, selectedImage, setSelectedImage
   const hasImages = images.length > 0;
 
   return (
-    <div className="space-y-4">
-      <div className="aspect-square bg-gray-200 rounded-2xl overflow-hidden">
+    <div className="flex flex-row gap-4 flex-1">
+      <div className="order-2 aspect-square bg-gray-200 rounded-2xl overflow-hidden">
         {hasImages ? (
           <img
             src={getImageUrl(images[selectedImage] || images[0])}
@@ -27,20 +27,21 @@ export default function ProductImages({ product, selectedImage, setSelectedImage
       </div>
 
       {hasImages && images.length > 1 && (
-        <div className="flex gap-4">
+        <div className="flex  flex-col gap-4 ">
           {images.map((img, i) => (
             <button
               key={i}
               onClick={() => setSelectedImage(i)}
-              className={`w-24 h-24 rounded-xl overflow-hidden border-2 ${
-                selectedImage === i ? "border-black shadow-lg" : "border-gray-200"
-              }`}
+              className={`w-24 h-24 rounded-xl overflow-hidden border-2 ${selectedImage === i ? "border-black shadow-lg" : "border-gray-200"
+                }`}
             >
               <img src={getImageUrl(img)} alt={`${product.name} ${i + 1}`} className="object-cover w-full h-full" />
             </button>
           ))}
         </div>
-      )}
+      )
+      }
+
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default function ProductInfo({
   const sizes = ["Small", "Medium", "Large", "X-Large"];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 flex-1">
       <div>
         <h1 className="text-4xl font-bold uppercase mb-4">{product.name}</h1>
         <div className="flex items-center gap-3">

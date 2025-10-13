@@ -49,3 +49,13 @@ export async function updateProductQuantity(orderId, productId, value ) {
     body: JSON.stringify({ value }),
   });
 }
+
+export async function getOrdersByUserId(userId) {
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/order/user/${userId}`
+  );
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  return response.json();
+}

@@ -9,7 +9,7 @@ export default function ProductSizes({ sizes, selectedSize, setSelectedSize }) {
           <button
             key={size}
             onClick={() => setSelectedSize(size)}
-            className={`px-6 py-3 rounded-full border-2 font-semibold ${
+            className={`px-6 py-3 rounded-full border-1 font-semibold ${
               selectedSize === size
                 ? "bg-black text-white border-black"
                 : "bg-gray-100 text-gray-700 border-gray-300 hover:border-gray-400"

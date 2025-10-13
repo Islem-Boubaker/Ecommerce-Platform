@@ -10,8 +10,8 @@ export default function ProductColors({ colors, selectedColor, setSelectedColor 
           <button
             key={i}
             onClick={() => setSelectedColor(i)}
-            className={`w-12 h-12 rounded-full border-4 ${
-              selectedColor === i ? "border-black scale-110" : "border-gray-300"
+            className={`w-10 h-10 rounded-full border-2 border-gray-300 ${
+              selectedColor === i ? " scale-110" : ""
             } relative`}
             style={{ backgroundColor: c }}
           >
