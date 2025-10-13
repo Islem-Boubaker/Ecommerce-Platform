@@ -1,16 +1,17 @@
 import React from "react";
 import Comment from "./Comment";
+import FAQsection from "./FAQsection";
 export default function ProductTabs({ product, activeTab, setActiveTab }) {
   const tabs = ["Product Details", "Rating & Reviews", "FAQs"];
 
   return (
     <div className="mt-16">
-      <div className="border-b border-gray-200 flex gap-8">
+      <div className=" flex justify-center border-b border-gray-200  gap-10">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`pb-4 font-semibold text-lg ${
+            className={`pb-4 font-semibold text-lg  w-100 ${
               activeTab === tab ? "text-black border-b-2 border-black" : "text-gray-500"
             }`}
           >
@@ -43,7 +44,7 @@ export default function ProductTabs({ product, activeTab, setActiveTab }) {
         )}
 
         {activeTab === "FAQs" && (
-          <p className="text-gray-500 text-center py-12">FAQ section coming soon...</p>
+         <FAQsection />
         )}
       </div>
     </div>
