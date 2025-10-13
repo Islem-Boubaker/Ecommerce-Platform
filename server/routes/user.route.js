@@ -1,5 +1,5 @@
 import express from "express";
-import { getallproducts, getproductById } from "../controllers/product.controller.js";
+import { getallproducts, getproductById, getproductsByCategory} from "../controllers/product.controller.js";
 import { createComment, deleteComment, getComments, updateComment } from "../controllers/Comment.controllers.js";
 const router = express.Router();
 
@@ -9,5 +9,6 @@ router
   .post("/user/createcomment/:productId/:userId", createComment)
   .put("/user/updatecomment/:id/:userId", updateComment)
   .delete("/user/deletecomment/:id/:userId", deleteComment)
-  .get("/user/getcomment/:productId", getComments);
+  .get("/user/getcomment/:productId", getComments)
+  .get("/user/getproductbycategory/:category", getproductsByCategory)
 export default router;

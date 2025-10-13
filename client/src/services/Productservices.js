@@ -31,3 +31,18 @@ export const deleteProduct = async (id) => {
   );
   return response.data;
 };
+
+
+
+
+export const getproductbygat = async (category) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/user/getproductbycategory/${encodeURIComponent(category)}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching products by category:", error);
+    throw error;
+  }
+};

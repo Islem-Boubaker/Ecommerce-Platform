@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useProduct } from "../Hooks/useProduct";
@@ -7,6 +7,8 @@ import ProductImages from "../Components/Product/ProductImages";
 import ProductInfo from "../Components/Product/ProductInfo";
 import ProductTabs from "../Components/Product/ProductTabs";
 import ProductLoader from "../Components/Product/ProductLoader";
+import ProductCart from "../Components/ProductCart";
+import { getproductbygat } from "../services/Productservices";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -18,6 +20,15 @@ export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState("Large");
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("Product Details");
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (!product?.category) return;
+      const items = await getproductbygat(product.category);
+      setProducts(items);
+    };
+    fetchProducts();
+  }, [product?.category]);
 
   if (loading) return <ProductLoader text="Loading product..." />;
   if (error)
@@ -37,7 +48,7 @@ export default function ProductDetails() {
     );
 
   return (
-    <div className="min-h-screen ">
+    <> <div className="min-h-screen ">
       {/* Back button */}
       <div className="bg-white">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -71,5 +82,23 @@ export default function ProductDetails() {
 
       <ProductTabs product={product} activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
+      <div className="max-w-screen mx-auto px-6 py-8">
+        <h2 className="text-5xl font-bold text-gray-900 uppercase">you might also like</h2>
+
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <ProductCart key={product._id} product={product} />
+          ))}
+        </div>
+
+
+
+
+
+
+      </div>
+    </>
+   
   );
 }
