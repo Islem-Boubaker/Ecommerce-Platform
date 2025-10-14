@@ -101,3 +101,4 @@ export const getproductsByCategory = async (req, res) => {
       .json({ message: "Error getting products", error: error.message });
   }
 };
+  

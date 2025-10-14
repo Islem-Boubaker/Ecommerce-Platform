@@ -25,21 +25,27 @@ const product = new mongoose.Schema(
     },
 
     category: {
-      type: String, // e.g. "Women", "Men", "Kids"
+      type: String, 
       required: true,
     },
 
+    type: {
+      type: String, 
+      required: true,
+      trim: true,
+    },
+
     style: {
-      type: String, // e.g. "Casual", "Formal", "Party", "Gym"
+      type: String, 
     },
 
     size: {
-      type: [String], // e.g. ["S", "M", "L", "XL"]
+      type: [String], 
       default: [],
     },
 
     color: {
-      type: [String], // e.g. ["Red", "Black", "White"]
+      type: [String], 
       default: [],
     },
 
@@ -51,11 +57,11 @@ const product = new mongoose.Schema(
 
     promotion: {
       discountType: {
-        type: String, // e.g. "percentage" or "flat"
+        type: String, 
         enum: ["percentage", "flat"],
       },
       discountValue: {
-        type: Number, // e.g. 10 (means 10%)
+        type: Number,
         min: 0,
       },
       active: {
@@ -83,15 +89,10 @@ const product = new mongoose.Schema(
     },
 
     material: {
-      type: String, // e.g. "Cotton", "Polyester"
+      type: String,
     },
-
-    isFeatured: {
-      type: Boolean,
-      default: false,
-    }
   },
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 export default mongoose.model("Product", product);
