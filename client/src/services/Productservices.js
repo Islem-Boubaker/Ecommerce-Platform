@@ -40,7 +40,12 @@ export const getproductbygat = async (category) => {
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/user/getproductbycategory/${encodeURIComponent(category)}`
     );
-    return response.data;
+    // Normalize to always return an array of products
+    return Array.isArray(response.data)
+      ? response.data
+      : Array.isArray(response.data?.products)
+      ? response.data.products
+      : [];
   } catch (error) {
     console.error("Error fetching products by category:", error);
     throw error;
