@@ -1,21 +1,22 @@
-// Plain API helper for orders
-export const createOrder = async (orderData) => {
+export const createOrder = async (productId, userId, quantity) => {
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/order/createorder/${orderData.userId}/${orderData.productId}`,
+    `${import.meta.env.VITE_API_URL}/order/createorder/${userId}/${productId}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: orderData,
+      body: JSON.stringify({
+        order: `${productId},${userId},${quantity}`,
+      }),
     }
   );
 
   if (!response.ok) {
-    
     throw new Error(`HTTP error! Status: ${response.status}`);
   }
-  return response.json();
+
+  return await response.json();
 };
 
 

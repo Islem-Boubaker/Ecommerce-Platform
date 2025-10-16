@@ -1,5 +1,5 @@
 import Orders from "../models/Orders.model.js";
-
+import Product from "../models/Product.model.js";
 export const getordersbyuser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -67,58 +67,59 @@ export const deleteorders = async (req, res) => {
 
 export const createOrder = async (req, res) => {
   try {
-    const {userId,productId} = req.params;
-    const orderData = req.body;
+    const { userId, productId } = req.params;
+    const {
+      quantity = 1,
+      shippingAddress = "",
+      deliveryFee = 0,
+      location = "",
+    } = req.body;
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
 
-    // Find existing order for this user
-    let order = await Orders.findOne({ userId: userId });
+    // 2️⃣ Find existing order for this user
+    let order = await Orders.findOne({ userId });
+
+    const orderItem = {
+      productId: product._id,
+      name: product.name,
+      quantity,
+      price: product.price,
+    };
 
     if (order) {
-      // Append products to existing order
-      if (Array.isArray(orderData.products)) {
-        for (const item of orderData.products) {
-          order.products.push({
-            productId: item.productId,
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price,
-          });
-        }
+      const existingItemIndex = order.products.findIndex(
+        (p) => p.productId.toString() === productId
+      );
+      if (existingItemIndex > -1) {
+        order.products[existingItemIndex].quantity += quantity;
+      } else {
+        order.products.push(orderItem);
       }
-
-      // Recalculate total
       order.totalPrice =
         order.products.reduce(
           (total, item) => total + item.price * item.quantity,
           0
         ) + (order.deliveryFee || 0);
 
-      order.updatedAt = new Date();
       await order.save();
+
       return res
         .status(200)
         .json({ message: "Product added to order successfully", order });
     }
 
-    // Create new order
-    const products = Array.isArray(orderData.products)
-      ? orderData.products
-      : [];
-    const deliveryFee =
-      typeof orderData.deliveryFee === "number" ? orderData.deliveryFee : 0;
-    const totalPrice =
-      products.reduce((total, item) => total + item.price * item.quantity, 0) +
-      deliveryFee;
+    const totalPrice = orderItem.price * orderItem.quantity + deliveryFee;
 
     order = await Orders.create({
-      userId: orderData.userId,
-      products,
+      userId,
+      products: [orderItem],
       deliveryFee,
       totalPrice,
-      shippingAddress: orderData.shippingAddress,
-      location: orderData.location,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      shippingAddress,
+      location,
     });
 
     return res
@@ -126,9 +127,10 @@ export const createOrder = async (req, res) => {
       .json({ message: "Order created successfully", order });
   } catch (error) {
     console.error("Error creating/updating order:", error);
-    return res
-      .status(500)
-      .json({ message: "Error creating/updating order", error: error.message });
+    return res.status(500).json({
+      message: "Error creating/updating order",
+      error: error.message,
+    });
   }
 };
 
@@ -180,8 +182,6 @@ export const deleteProductFromOrder = async (req, res) => {
   }
 };
 
-
-
 export const updateProductFromOrder = async (req, res) => {
   try {
     const { orderId, productId } = req.params;
@@ -204,7 +204,7 @@ export const updateProductFromOrder = async (req, res) => {
     }
 
     // Update the product quantity
-    product.quantity =  value;
+    product.quantity = value;
 
     // Recalculate total price
     order.totalPrice =
