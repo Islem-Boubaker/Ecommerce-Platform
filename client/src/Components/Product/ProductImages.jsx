@@ -19,7 +19,6 @@ export default function ProductImages({ product, selectedImage, setSelectedImage
             src={getImageUrl(images[selectedImage] || images[0])}
             alt={product.name}
             className="w-full h-full object-cover"
-            onError={(e) => (e.target.src = "https://via.placeholder.com/400x400?text=No+Image")}
           />
         ) : (
           <div className="flex items-center justify-center h-full text-gray-400">📦 No Image</div>
@@ -35,12 +34,11 @@ export default function ProductImages({ product, selectedImage, setSelectedImage
               className={`w-24 h-24 rounded-xl overflow-hidden border-2 ${selectedImage === i ? "border-black shadow-lg" : "border-gray-200"
                 }`}
             >
-              <img src={getImageUrl(img)} alt={`${product.name} ${i + 1}`} className="object-cover w-full h-full" />
+              <img src={getImageUrl(images[i])} alt={`${product.name} ${i + 1}`} className="object-cover w-full h-full" />
             </button>
           ))}
         </div>
-      )
-      }
+      )}
 
     </div>
   );

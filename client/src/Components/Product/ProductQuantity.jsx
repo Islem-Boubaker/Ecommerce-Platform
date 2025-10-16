@@ -25,11 +25,10 @@ export default function ProductQuantity({ quantity, setQuantity, product }) {
         <span className="w-16 text-center font-semibold text-lg">{quantity}</span>
         <button onClick={() => handleChange(1)} className="w-12 h-12 hover:bg-gray-100">+</button>
       </div>
-      <Link to="/Cart" onClick={() => handleAddToCart(product)} className="w-50">
-      <button className=" bg-black text-white py-4 rounded-full font-semibold text-lg hover:bg-gray-800 w-50" >
+      
+      <button onClick={() => handleAddToCart(product)}className=" bg-black text-white py-4 rounded-full font-semibold text-lg hover:bg-gray-800 w-50" >
         Add to Cart
       </button>
-      </Link>
     </div>
   );
 }
