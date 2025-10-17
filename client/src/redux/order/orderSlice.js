@@ -2,8 +2,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  orderId: null, 
-  orders: [], // Array of products in cart
+  userId: null,
+  products: [],
   loading: false,
   error: null,
 };
@@ -13,46 +13,58 @@ const ordersSlice = createSlice({
   initialState,
   reducers: {
     addOrder: (state, action) => {
-      
-      const existingItem = state.orders.find(
-        (item) => item.productId === action.payload.productId
+      const payload = action.payload;
+      // find product from order if exist 
+      const existingItem = state.products.find(
+        (item) => item.productId === payload.productId
       );
+      //  if product exist add +1:
       if (existingItem) {
-        existingItem.quantity += 1; // increment if exists
+        existingItem.quantity += 1;
       } else {
-        state.orders.push({ 
-          ...action.payload, 
-          quantity: 1 
+        // else push new product
+        state.products.push({
+          ...payload,
+          quantity: 1,
         });
       }
     },
-    removeOrder: (state, action) => {
-      state.orders = state.orders.filter(
+
+    // when i remove product from order in cart pages 
+    removeProductFromOrder: (state, action) => {
+      state.products = state.products.filter(
         (item) => item.productId !== action.payload
       );
     },
+
     incrementQuantity: (state, action) => {
-      const item = state.orders.find(
+      const item = state.products.find(
         (item) => item.productId === action.payload
       );
-      if (item) item.quantity += 1;
+      if (item) {
+        item.quantity += 1;
+      }
     },
+
     decrementQuantity: (state, action) => {
-      const item = state.orders.find(
+      const item = state.products.find(
         (item) => item.productId === action.payload
       );
-      if (item && item.quantity > 1) item.quantity -= 1;
+      if (item && item.quantity > 1) {
+        item.quantity -= 1;
+      }
     },
+
+    // when logout 
     clearOrders: (state) => {
-      state.orders = [];
-      state.orderId = null;
+      state.products = [];
+      state.userId = null;
     },
-    setOrderId: (state, action) => {
-      state.orderId = action.payload;
-    },
+
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+
     setError: (state, action) => {
       state.error = action.payload;
     },
@@ -61,11 +73,10 @@ const ordersSlice = createSlice({
 
 export const {
   addOrder,
-  removeOrder,
+  removeProductFromOrder,
   incrementQuantity,
   decrementQuantity,
   clearOrders,
-  setOrderId,
   setLoading,
   setError,
 } = ordersSlice.actions;

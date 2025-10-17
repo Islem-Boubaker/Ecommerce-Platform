@@ -1,16 +1,23 @@
 import React from "react";
 import { FaTrash } from "react-icons/fa";
 
-export default function CartItem({ product, onIncrement, onDecrement, onRemove }) {
+export default function CartItem({
+  product,
+  onIncrement,
+  onDecrement,
+  onRemove,
+}) {
+  
+  const imageUrl =`${import.meta.env.VITE_API_URL}/${product.image.replace(/\\/g, "/")}`
+
+
   return (
-    <div
-      key={product.productId}
-      className="flex items-start gap-4 border-b border-gray-200 pb-4 last:border-none"
-    >
+    <div className="flex items-start gap-4 border-b border-gray-200 pb-4 last:border-none">
       <img
-        src={`${import.meta.env.VITE_API_URL}/${product.image.replace(/\\/g, "/")}`}
+        src={imageUrl}
         alt={product.name}
         className="w-20 h-20 object-cover rounded-lg"
+      
       />
 
       <div className="flex-1">
@@ -25,11 +32,17 @@ export default function CartItem({ product, onIncrement, onDecrement, onRemove }
 
       {/* Quantity Controls */}
       <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1">
-        <button className="text-xl" onClick={() => onDecrement(product.productId)}>
+        <button
+          className="text-xl"
+          onClick={() => onDecrement(product.productId)}
+        >
           −
         </button>
         <span>{product.quantity}</span>
-        <button className="text-xl" onClick={() => onIncrement(product.productId)}>
+        <button
+          className="text-xl"
+          onClick={() => onIncrement(product.productId)}
+        >
           +
         </button>
       </div>
