@@ -1,24 +1,30 @@
 
-import { useDispatch } from "react-redux";
-import { addOrder } from "../../redux/order/orderSlice";
-import { createOrder } from "../../services/OrdersServices"
 import { useParams } from "react-router-dom";
+import { createOrder } from "../../services/OrdersServices";
 import { useSelector } from "react-redux";
-export default function ProductQuantity({ quantity, setQuantity}) {
-  const id = useParams().id;
-  const dispatch = useDispatch();
-  const userid = useSelector(state => state.user.currentuser._id);
+
+export default function ProductQuantity({ quantity, setQuantity }) {
+  const { id: productId } = useParams();
+  const userId = useSelector((state) => state.user.currentUser.id);
+  
   const handleChange = (delta) => setQuantity(Math.max(1, quantity + delta));
-  const handleAddToCart = () => {
-    console.log(id)
+  
+  const handleAddToCart = async () => {
     try {
-      if(!id){
-        throw new Error("Product not found")
+      if (!productId) {
+        throw new Error("Product not found");
       }
-      const order = createOrder(id, userid, quantity)
-      dispatch(addOrder(order))
+      if (!userId) {
+        throw new Error("Please log in to add items to cart");
+      }
+      
+      // Call the API service with all required parameters
+      await createOrder(productId, userId, quantity);
+      // You might want to show a success message here
+      alert("Product added to cart successfully!");
     } catch (error) {
-      console.log(error)
+      console.error("Error adding to cart:", error);
+      alert(error.message); // Show error message to user
     }
   }
   return (

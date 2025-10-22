@@ -4,7 +4,7 @@ import {
   deleteorders,
   updateorders,
   getallorders,
-  getordersbyuser,
+  getorderbyuser,
   deleteProductFromOrder,
   updateProductFromOrder
 } from "../controllers/Orders.controller.js";
@@ -22,6 +22,6 @@ router
   updateProductFromOrder
 )
   .get("/order/getallorders", getallorders)
-  .get("/order/getordersbyuser/:id", getordersbyuser)
+  .get("/order/getorderbyuser/:id", getorderbyuser)
 
 export default router;

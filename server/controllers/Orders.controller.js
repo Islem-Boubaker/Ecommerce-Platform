@@ -1,13 +1,13 @@
 import Orders from "../models/Orders.model.js";
 import Product from "../models/Product.model.js";
-export const getordersbyuser = async (req, res) => {
+export const getorderbyuser = async (req, res) => {
   try {
     const { id } = req.params;
-    const orders = await Orders.find({ userId: id });
-    if (!orders || orders.length === 0) {
+    const order = await Orders.find({ userId: id });
+    if (!order || order.length === 0) {
       return res.status(404).json({ message: "Orders not found" });
     }
-    res.status(200).json({ message: "Orders found successfully", orders });
+    res.status(200).json({ message: "Orders found successfully", order });
   } catch (error) {
     console.error("Error getting orders by user:", error);
     res

@@ -8,7 +8,6 @@ export const createComment = async (req, res, next) => {
         if (typeof comment !== "string" || !comment.trim()) {
             return res.status(400).json({ message: "'comment' must be a non-empty string" });
         }
-        
         const newComment = new Comment({ userId, productId, comment: comment.trim() });
         await newComment.save();
         res.status(201).json(newComment);

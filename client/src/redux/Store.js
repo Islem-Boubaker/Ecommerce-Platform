@@ -1,11 +1,11 @@
-import { configureStore,combineReducers } from '@reduxjs/toolkit'
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import userReducer from './user/userSlice';
-import ordersReducer from './order/orderSlice';
-import {persistReducer,persistStore} from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import process from 'process';
+
 const rootReducer = combineReducers({
   user: userReducer,
-  orders: ordersReducer,
 });
 const persistConfig = {
   key: 'root',
@@ -17,7 +17,8 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware:(getDefaultMiddleware)=>getDefaultMiddleware({
     serializableCheck:false,
-  })
+  }),
+  devTools: process.env.NODE_ENV !== 'production',
 })
 
 export const persistor = persistStore(store);

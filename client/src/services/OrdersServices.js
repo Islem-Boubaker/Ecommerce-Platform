@@ -51,9 +51,9 @@ export async function updateProductQuantity(orderId, productId, value ) {
   });
 }
 
-export async function getOrdersByUserId(userId) {
+export async function getOrderByUserId(userId) {
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/order/user/${userId}`
+    `${import.meta.env.VITE_API_URL}/order/getorderbyuser/${userId}`
   );
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);

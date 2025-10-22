@@ -1,29 +1,23 @@
 import { ShoppingCart } from "lucide-react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // make sure it's react-router-dom not just react-router
+// import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+// import { useMemo } from "react";
 
-function ShoppingCartIcon() {
+function ShoppingCartIcon({productcount=0}) {
   const navigate = useNavigate();
-
-  // Safely get orders from Redux
-  const orders = useSelector((state) => state.orders?.orders);
-
   const handleNavigate = () => {
-
-      if(orders.length > 0)navigate("/cart");
-   
+    navigate("/cart");
   };
-
 
   return (
     <div className="relative cursor-pointer">
       <ShoppingCart
-        onClick={handleNavigate} // ✅ pass function reference
+        onClick={handleNavigate}
         className="w-6 h-6 text-gray-700 hover:text-gray-900 transition-colors"
       />
-      {orders.length > 0 && (
+      { productcount>0 && (
         <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center min-w-[20px]">
-          {orders.length}
+          {productcount}
         </span>
       )}
     </div>

@@ -8,17 +8,33 @@ export default function CartItem({
   onRemove,
 }) {
   
-  const imageUrl =`${import.meta.env.VITE_API_URL}/${product.image.replace(/\\/g, "/")}`
+  // Handle cases where image might be undefined or already a full URL
+  const getImageUrl = (image) => {
+    if (!image) return '';
+    if (image.startsWith('http')) return image;
+    return `${import.meta.env.VITE_API_URL}/${image.replace(/\\/g, '/')}`;
+  };
+
+  const imageUrl = getImageUrl(product.image);
 
 
   return (
     <div className="flex items-start gap-4 border-b border-gray-200 pb-4 last:border-none">
-      <img
-        src={imageUrl}
-        alt={product.name}
-        className="w-20 h-20 object-cover rounded-lg"
-      
-      />
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt={product.name}
+          className="w-20 h-20 object-cover rounded-lg"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://via.placeholder.com/80';
+          }}
+        />
+      ) : (
+        <div className="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center">
+          <span className="text-gray-400">No Image</span>
+        </div>
+      )}
 
       <div className="flex-1">
         <h2 className="font-bold text-lg">{product.name}</h2>

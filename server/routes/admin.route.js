@@ -18,7 +18,7 @@ import {
   updateUser,
 } from "../controllers/user.controller.js";
 import {
-  getordersbyuser,
+  getorderbyuser,
   getallorders,
   updateorders,
   deleteorders,
@@ -57,7 +57,7 @@ router
   .get("/admin/getallusers", getAllUsers)
   .post("/admin/createuser",authMiddleware,createuser)
   .put("/admin/updateuser/:id",authMiddleware,updateUser)
-  .get("/admin/getordersbyuser/:id", getordersbyuser)
+  .get("/admin/getorderbyuser/:id", getorderbyuser)
   .put("/admin/updateorder/:id", updateorders)
   .delete("/admin/deleteorder/:id", deleteorders)
   .get("/admin/getallorders",authMiddleware, getallorders);
