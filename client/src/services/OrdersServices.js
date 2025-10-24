@@ -19,7 +19,6 @@ export const createOrder = async (productId, userId, quantity) => {
   return await response.json();
 };
 
-
 // // cart API call
 // export async function saveOrderToServer(userId, items) {
 //   const res = await fetch( `${import.meta.env.VITE_API_URL}/order/createorder`, {
@@ -37,18 +36,24 @@ export const createOrder = async (productId, userId, quantity) => {
 // }
 
 export async function deleteProductFromOrder(orderId, productId) {
-  await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}/product/${productId}`, {
-    method: "DELETE",
-  });
+  await fetch(
+    `${import.meta.env.VITE_API_URL}/order/${orderId}/product/${productId}`,
+    {
+      method: "DELETE",
+    }
+  );
 }
-export async function updateProductQuantity(orderId, productId, value ) {
-  await fetch(`${import.meta.env.VITE_API_URL}/order/${orderId}/product/${productId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ value }),
-  });
+export async function updateProductQuantity(orderId, productId, value) {
+  await fetch(
+    `${import.meta.env.VITE_API_URL}/order/${orderId}/product/${productId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ value }),
+    }
+  );
 }
 
 export async function getOrderByUserId(userId) {
