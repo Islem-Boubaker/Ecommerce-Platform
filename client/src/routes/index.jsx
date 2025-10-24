@@ -6,12 +6,13 @@ import NotFound from "../Pages/NotFound";
 import { useSelector } from "react-redux";
 
 export default function AppRoutes() {
-  const { user } = useSelector((state) => state.user);
+  const userIsAdmin = useSelector((state) => state.user.currentUser.role);
+ 
   return (
     <Routes>
       {PublicRoutes}
       {AuthRoutes}
-      {user?.isAdmin && AdminRoutes}
+      {userIsAdmin==="admin" && AdminRoutes}
 
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
