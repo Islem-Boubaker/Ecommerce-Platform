@@ -75,7 +75,7 @@ export default function CustomersManagement() {
           <h1 className="text-2xl font-bold">Customers Management</h1>
           <button
             onClick={() => openModal()}
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-blue-700"
           >
             <Plus className="w-5 h-5" /> Add Customer
           </button>
@@ -89,14 +89,14 @@ export default function CustomersManagement() {
               placeholder="Search by name, email, or phone"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black "
             />
             <Search className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
           </div>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black"
           >
             <option value="All">All Status</option>
             <option value="Active">Active</option>
