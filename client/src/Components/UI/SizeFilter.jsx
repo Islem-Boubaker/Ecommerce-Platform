@@ -1,31 +1,35 @@
-import React from 'react'
+import React from "react";
 
-export default function SizeFilter({ selectedSizes = [], onChange }) {
-  const toggleSize = (size) => {
-    const next = selectedSizes.includes(size)
-      ? selectedSizes.filter((s) => s !== size)
-      : [...selectedSizes, size]
-    onChange && onChange(next)
-  }
+export default function SizeFilter({ selectedSize, onChange }) {
+  const sizes = [
+    "Small",
+    "Medium",
+    "Large",
+    "X-Large",
+    "XX-Large",
+    "3X-Large",
+    "4X-Large",
+  ];
 
   return (
-    <div className='flex flex-col gap-2 border-b-1 border-gray-400 pb-6'>
-      <h3 className="font-semibold mb-2">Size</h3>
+    <div className="flex flex-col gap-3 pb-6 border-b border-gray-200">
+      <h3 className="font-semibold text-base">Size</h3>
       <div className="flex flex-wrap gap-2">
-        {["XX-Small", "X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large", "3X-Large", "4X-Large"].map((size) => (
+        {sizes.map((size) => (
           <button
             type="button"
             key={size}
-            onClick={() => toggleSize(size)}
-            className={`px-3 py-1 text-sm border rounded hover:bg-gray-100 ${
-              selectedSizes.includes(size) ? 'bg-gray-200 border-black' : ''
+            onClick={() => onChange(size)}
+            className={`px-5 py-2 text-sm rounded-full transition-all ${
+              selectedSize === size
+                ? "bg-black text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
             }`}
-            aria-pressed={selectedSizes.includes(size)}
           >
             {size}
           </button>
         ))}
       </div>
     </div>
-  )
+  );
 }
