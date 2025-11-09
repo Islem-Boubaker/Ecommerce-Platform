@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export default function ProductQuantity({ quantity, setQuantity }) {
   const { id: productId } = useParams();
-  const userId = useSelector((state) => state.user.currentUser.id);
+  const userId = useSelector((state) => state.user.currentUser?.id);
   
   const handleChange = (delta) => setQuantity(Math.max(1, quantity + delta));
   
