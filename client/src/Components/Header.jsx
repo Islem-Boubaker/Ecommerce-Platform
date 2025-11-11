@@ -5,42 +5,53 @@ import NavBar from "./NavBar";
 import EcommerceLogo from "./UI/ecommerceLogo";
 import { useNavigate } from "react-router";
 
-
 function Header({ items }) {
-    const navigate = useNavigate();
-    return (
-        <header className="w-full bg-white shadow-lg sticky top-0 z-50">
-            <div className="max-w-screen-xl mx-auto px-4 h-18 flex items-center gap-15 ">
-                {/* Left - Logo */}
-                <div className="shrink-0 order-1">
-                    <EcommerceLogo />
-                </div>
+  const navigate = useNavigate();
 
-            
-                <div className="order-3  lg:flex flex-1 justify-center lg:order-2">
-                    <NavBar items={items} />
-                </div>
+  return (
+    <header className="w-full bg-white shadow-lg sticky top-0 z-50">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 gap-2 md:gap-6 lg:gap-8">
+          <div className="flex items-center shrink-0">
+            <EcommerceLogo />
+          </div>
 
-                
-                <div className="flex order-2 items-center gap-3 ml-auto lg:order-3 m-0 ">
-                    <SearchBar />
-                    <div className="flex items-center gap-2">
-                        <div
-                            className="cursor-pointer"
-                          
-                        >
-                            <ShoppingCartIcon />
-                            
-                        </div>
-                        <button onClick={()=>navigate("/auth")} >
-                        <LoginIcon />
-                        </button>
-                    </div>
-                    
-                </div>
+          <div className="hidden md:flex items-center flex-1 justify-center lg:justify-start lg:flex-initial lg:order-2">
+            <NavBar items={items} />
+          </div>
+
+          <div className="hidden md:flex items-center gap-4 lg:order-3 lg:flex-1 lg:justify-end">
+            <SearchBar />
+            <div className="flex items-center gap-3">
+              <div className="cursor-pointer hover:opacity-70 transition-opacity">
+                <ShoppingCartIcon />
+              </div>
+              <button
+                onClick={() => navigate("/auth")}
+                className="hover:opacity-70 transition-opacity"
+              >
+                <LoginIcon />
+              </button>
             </div>
-        </header>
-    );
+          </div>
+
+          <div className="flex md:hidden items-center gap-2 flex-1 justify-end">
+            <SearchBar />
+            <div className="cursor-pointer hover:opacity-70 transition-opacity">
+              <ShoppingCartIcon />
+            </div>
+            <button
+              onClick={() => navigate("/auth")}
+              className="hover:opacity-70 transition-opacity"
+            >
+              <LoginIcon />
+            </button>
+            <NavBar items={items} isMobile={true} />
+          </div>
+        </div>
+      </div>
+    </header>
+  );
 }
 
 export default Header;
