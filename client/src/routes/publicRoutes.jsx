@@ -1,9 +1,9 @@
 import { Route } from "react-router-dom";
-import MainLayout from "../Layouts/MainLayout";
-import Home from "../Pages/Home";
-import ProductDetails from "../Pages/ProductDetails";
-import Category from "../Pages/Category";
-import Cart from "../Pages/Cart";
+import MainLayout from "../shared/components/MainLayout";
+import Home from "../shared/pages/Home";
+import ProductDetails from "../features/products/pages/ProductDetails";
+import Category from "../features/products/pages/Category";
+import Cart from "../features/cart/pages/Cart";
 export const PublicRoutes = (
   <Route element={<MainLayout />}>
     <Route path="/" element={<Home />} />

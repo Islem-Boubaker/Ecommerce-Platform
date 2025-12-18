@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { PublicRoutes } from "./publicRoutes";
 import { AuthRoutes } from "./authRoutes";
 import { AdminRoutes } from "./AdminRoute";
-import NotFound from "../Pages/NotFound";
+import NotFound from "../shared/pages/NotFound";
 import { useSelector } from "react-redux";
 
 export default function AppRoutes() {
