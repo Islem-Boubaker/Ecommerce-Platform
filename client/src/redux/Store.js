@@ -2,7 +2,6 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import userReducer from './user/userSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import process from 'process';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -18,7 +17,7 @@ export const store = configureStore({
   middleware:(getDefaultMiddleware)=>getDefaultMiddleware({
     serializableCheck:false,
   }),
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: import.meta.env.MODE !== 'production',
 })
 
 export const persistor = persistStore(store);
