@@ -3,11 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useProduct } from "../Hooks/useProduct";
 
-import ProductImages from "../Components/Product/ProductImages";
-import ProductInfo from "../Components/Product/ProductInfo";
-import ProductTabs from "../Components/Product/ProductTabs";
-import ProductLoader from "../Components/Product/ProductLoader";
-import ProductCart from "../Components/ProductCart";
+import ProductImages from "../features/products/components/ProductImages";
+import ProductInfo from "../features/products/components/ProductInfo";
+import ProductTabs from "../features/products/components/ProductTabs";
+import ProductLoader from "../features/products/components/ProductLoader";
+import ProductCart from "../features/products/components/ProductCard";
 import { getproductbygat } from "../services/Productservices";
 
 export default function ProductDetails() {

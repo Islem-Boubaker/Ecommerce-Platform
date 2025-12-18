@@ -11,10 +11,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import Header from "../../Components/Admin/Header";
-import Sidebar from "../../Components/Admin/Sidebar";
-import StatCard from "../../Components/Admin/StatCard";
-import OrdersTable from "../../Components/Admin/OrdersTable";
+import Header from "../../features/admin/components/Header";
+import Sidebar from "../../features/admin/components/Sidebar";
+import StatCard from "../../features/admin/components/StatCard";
+import OrdersTable from "../../features/admin/components/OrdersTable";
 import CustomersManagement from "./CustomersManagement";
 import Settings from "./Settings";
 import ProductsManagement from "./ProductsManagement";

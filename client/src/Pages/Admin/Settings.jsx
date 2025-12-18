@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ProfileCard from "../../Components/UI/ProfileCard";
-import PersonalInfoSection from "../../Components/Admin/PersonalInfoSection";
-import PasswordSection from "../../Components/Admin/PasswordSection";
-import PreferencesSection from "../../Components/Admin/Preferences";
+import ProfileCard from "../../shared/components/ProfileCard";
+import PersonalInfoSection from "../../features/admin/components/PersonalInfoSection";
+import PasswordSection from "../../features/admin/components/PasswordSection";
+import PreferencesSection from "../../features/admin/components/Preferences";
 
 // Main Settings Component
 export default function Settings() {

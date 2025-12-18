@@ -1,7 +1,7 @@
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+import Header from "../shared/components/Header";
+import Footer from "../shared/components/Footer";
 import { Outlet } from "react-router-dom";
-import SubscribeForm from "../Components/subscribeform"
+import SubscribeForm from "../shared/components/SubscribeForm"
 
 function MainLayouts() {
     return (

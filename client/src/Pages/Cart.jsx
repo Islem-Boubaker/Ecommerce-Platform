@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
-import CartItem from "../Components/CartItem";
-import OrderSummary from "../Components/OrderSummary";
+import CartItem from "../features/cart/components/CartItem";
+import OrderSummary from "../features/orders/components/OrderSummary";
 import axios from "axios";
 
 export default function Cart() {

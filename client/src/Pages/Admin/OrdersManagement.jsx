@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Search, Filter, Download, MoreVertical, Eye, Check, X, Truck, RefreshCw } from 'lucide-react';
-import OrdersTable from '../../Components/Admin/OrdersTable';
+import OrdersTable from '../../features/admin/components/OrdersTable';
 
 const OrdersManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');

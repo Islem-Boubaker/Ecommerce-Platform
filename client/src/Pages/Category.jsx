@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import FilterSidebar from "../Components/Filters";
-import ProductCard from "../Components/ProductCart";
-import Pagination from "../Components/UI/Pagination";
+import FilterSidebar from "../features/products/components/FilterSidebar";
+import ProductCard from "../features/products/components/ProductCard";
+import Pagination from "../shared/components/Pagination";
 
 const initialProducts = [
   {

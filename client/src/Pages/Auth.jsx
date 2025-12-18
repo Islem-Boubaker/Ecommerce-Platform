@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { User, Mail, Lock, Phone } from "lucide-react";
-import FormInput from "../Components/UI/FormInput";
-import AuthHeader from "../Components/UI/AuthHeader";
-import ErrorDisplay from "../Components/UI/ErrorsDisplay";
-import SubmitButton from "../Components/UI/SubmitButton";
-import RememberMeSection from "../Components/UI/RememberMeSection";
-import Authtoggle from "../Components/UI/Authtoggle";
+import FormInput from "../features/auth/components/FormInput";
+import AuthHeader from "../features/auth/components/AuthHeader";
+import ErrorDisplay from "../features/auth/components/ErrorDisplay";
+import SubmitButton from "../features/auth/components/SubmitButton";
+import RememberMeSection from "../features/auth/components/RememberMeSection";
+import Authtoggle from "../features/auth/components/AuthToggle";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
